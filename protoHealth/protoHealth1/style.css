@@ -1,0 +1,77 @@
+/* box sizing makes a box's measurements include its border and padding, so i dont have to worry about it growing further past the original width i stated */
+* { box-sizing: border-box;}
+
+body {
+    margin: 0;
+    background: white;
+    color: grey;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* the entire styling of the health bar is just a flexbox set to column to make it vertical, with centering. some basic padding with margins to make it not look so cluttered. */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 32px 16px;
+}
+
+h1 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: black;
+}
+
+/* the 'relative' positioning here basically sets the bar as the 'anchor point' for any changes. kind of like setting something as the origin point so that other code that references has an easy reference point */
+.bar {
+    position: relative;
+    width: 80px;
+    height: 320px;
+    background: #313030;
+    border: 1px solid black;
+}
+
+/* with the bar set as the relative point, 'absolute' here pins it to the very dimensions of the bar. js will change the height of fill. */
+.fill {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    background: red;
+    transition: height 0.25s ease;
+}
+
+label { 
+    font-size: 14px; 
+    color: black;
+}
+
+.hp-row {
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 20px;
+}
+
+input {
+    width: 5em;
+    /* for some reason form controls dont automatically inherit a previosuly set font, so we have to explicitly tell it to 'inherit' it */
+    font: inherit;
+    padding: 4px 6px;
+    border: 1px solid black;
+    border-radius: 4px;
+    /* this is linking the glow style to target the input field */
+    transition: box-shadow 0.4s ease;
+}
+
+/* styling for the extended technique */
+.glow { 
+    box-shadow: 
+    /* the first style is for the hard, outline colour change to blue */
+    0 0 0 3px #2f6fed, 
+    /* second style is for the soft blur that emulates a 'glowing' effect */
+    0 0 18px 6px #2f6fed8c;
+}
