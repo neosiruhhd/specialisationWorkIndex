@@ -1,62 +1,32 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!DOCTYPE html>
+<html land="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>protoHealth1</title>
+        <link rel="stylesheet" href="style.css"> 
+    </head>
 
-<!-- !!!!! -->
-<!--    change this to refer to your specific page  -->
-    <title>Neo's Landing</title>
-
-<!-- !!!!! -->
-<!--  change this to your preferred icon  -->
-    <!-- favicon was sourced from favicon.io but the original graphics are copyright 2020 Twitter, Inc
-    and other contributors -->
-    <!-- They are licensed under CC-BY 4.0 as linked below -->
-    <!-- https://creativecommons.org/licenses/by/4.0/ -->
-    <link rel="icon" type="image/png" href="./assets/icons/skull.png">
-
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <header>
-<!-- !!!!! -->
-<!--    change this to your preferred online name  -->
-        <h1>Neo Serad's Interface Design and Development Work</h1>
-    </header>
-
-    <div class="mainNavContainer">
-
-        <nav>
-            <a href="a1.html">Assignment 1</a>
-            <a href="a2.html">Assignment 2</a>
-            <a href="a3.html">Assignment 3</a>
-        </nav>
-
+    <body>
         <main>
-            <section id="intro-section">
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto asperiores deleniti, dolore, fugiat harum ipsum magni natus nemo nobis quos, totam veniam. Assumenda eaque labore minus praesentium quidem sapiente?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto asperiores deleniti, dolore, fugiat harum ipsum magni natus nemo nobis quos, totam veniam. Assumenda eaque labore minus praesentium quidem sapiente?</p>
-            </section>
+            <h1>Health: vertical bar</h1>
+
+            <!-- for the visual bar itself, html places it, css colours it, and js calculates the percentage and changes the vertical scale of it accordingly. using a div to be able to target it across files. "bar" class is the grey rectangle behind, "fill" class is the red health box in front -->
+            <div class="bar">
+                <!-- class is for css targeting, id is for js targeting -->
+                <div class="fill" id="fill"></div>
+            </div>
+            
+            <!-- the 'label for' line lets the browser know that the label of 'Current HP' and the number field next to it are associated, not just placed together by coincidence. -->
+            <label for="hp">Current HP</label>
+            <div class="hp-row">
+                <!-- parameters set through the input element, letting me set the minimum and max health for the prototype, what it starts at, and in what increments or 'steps' the user can change it with through button taps -->
+                <input id="hp" type="number" min="0" max="500" step="10" value="500">
+                <span>/ 500</span>
+            </div>
         </main>
 
-        <!-- this is an empty element which helps with spacing -->
-        <aside></aside>
-
-    </div>
-
-    <footer>
-        <p>
-<!-- !!!!! -->
-<!--    change this to your preferred online name and update link to refer to your github page  -->
-            Page maintained by:
-            <a href="https://github.com/neosiruhhd" target="_blank">
-            Neo Serad
-            </a>
-        </p>
-    </footer>
-</body>
+        <!-- script is at the end since js will need to target elements from html, and it cant do that before all the elemtetns have loaded sequiuentially -->
+         <script src="script.js"></script>
+    </body>
 </html>
