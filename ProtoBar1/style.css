@@ -1,0 +1,98 @@
+* { box-sizing: border-box; }
+
+/* a slot is the lnegth of a bar. if this is reduced, the bars are more clustered together, if it is increased, the bars are more spread apart. */
+:root {
+  --slot: 48px;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 32px 16px;
+}
+
+h1 { font-size: 20px; font-weight: 600; margin: 0 0 12px; }
+
+/* this styling leaves enough padding for the 'current bar' label above the bars themselves */
+.timeline-wrap {
+  position: relative;
+  padding-top: 32px;
+  max-width: 100%;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  /* this pushes the label to the center of slot 5 */
+  left: calc(var(--slot) * 5.5);
+  /* this shifts it back by half of its own width as a trick to center its anchor point on top of the middle bar */
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: #555555;
+  white-space: nowrap;
+}
+
+.timeline {
+  position: relative;
+  /* this sets the width to be 10 slots long */
+  width: calc(var(--slot) * 10);
+  /* this sets the height to be 1 slong tall */
+  height: var(--slot);
+  background: #f2f2f2;
+  border: 1px solid #cccccc;
+}
+
+/* styling for the playhead, with dashed border */
+.playhead {
+  position: absolute;
+  left: calc(var(--slot) * 5.5);
+  top: -8px;
+  bottom: -8px;
+  border-left: 2px dashed #111111;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* styling for each of the slots (one-bar square) */
+.slot {
+  position: absolute;
+  top: 0;
+  width: var(--slot);
+  height: var(--slot);
+  display: grid;
+  place-items: center;
+}
+
+/* shows the placements of where slots sit, grey coloured */
+.ring {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  border: 2px solid #cccccc;
+}
+
+/* this is the transition for the conveyor slide. js changes its 'left' value, making all the dots shift from right to left every bar */
+.dot-slot {
+  transition: left 0.28s ease, opacity 0.28s ease;
+  z-index: 2;
+}
+
+/* The dot. Its colour comes from the --colour variable that JS sets
+   on each dot. */
+
+/* colour for the dot comes from the colour selection range stated by js */
+.dot {
+  width: 70%;
+  height: 70%;
+  border-radius: 50%;
+  background: var(--colour);
+}
