@@ -1,7 +1,7 @@
 // setting up constant values for js to refrence as anchored values.
 const maxHP = 500;
 // these are the timings for dictating how long the ui needs to be idle for glow to activate, and how long the glow lasts for WHEN it is activated
-const idleMS = 5000;
+const idleMS = 3000;
 const glowMS = 2000;
 
 // these 2 consts are responsible for linking to the html elements
