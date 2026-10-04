@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>protoHealth3</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Health: heart</h1>
+
+         <!-- similar to the svg circle used in protoHealth2, i state the units i want to measure the heart shape by before drawing it out using values -->
+    <svg class="heart" viewBox="0 0 100 92" aria-hidden="true">
+      <defs>
+        <!-- all the different paths and curves used to render the shape of the heart -->
+        <path id="heart-shape" d="M50 90 C 22 68, 2 50, 2 28 C 2 12, 14 2, 28 2 C 38 2, 46 8, 50 16 C 54 8, 62 2, 72 2 C 86 2, 98 12, 98 28 C 98 50, 78 68, 50 90 Z"></path>
+        <!-- this creates a rectangle that is the layer of the red fill, used as a matte so it only appears on top of the heart, not spilling over it -->
+        <clipPath id="level-clip">
+          <rect id="level" x="0" y="0" width="100" height="200"></rect>
+        </clipPath>
+      </defs>
+
+      <!-- the heart shape gets drawn out 3 time for the empty grey back, red fill front, and an outline for the heart. -->
+      <use href="#heart-shape" class="empty"></use>
+      <use href="#heart-shape" class="full" clip-path="url(#level-clip)"></use>
+      <use href="#heart-shape" class="outline"></use>
+    </svg>
+
+    <label for="hp">Current HP</label>
+    <div class="hp-row">
+      <input id="hp" type="number" min="0" max="500" step="1" value="500">
+      <span>/ 500</span>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
