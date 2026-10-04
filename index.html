@@ -1,62 +1,27 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-<!-- !!!!! -->
-<!--    change this to refer to your specific page  -->
-    <title>Neo's Landing</title>
-
-<!-- !!!!! -->
-<!--  change this to your preferred icon  -->
-    <!-- favicon was sourced from favicon.io but the original graphics are copyright 2020 Twitter, Inc
-    and other contributors -->
-    <!-- They are licensed under CC-BY 4.0 as linked below -->
-    <!-- https://creativecommons.org/licenses/by/4.0/ -->
-    <link rel="icon" type="image/png" href="./assets/icons/skull.png">
-
-    <link rel="stylesheet" href="reset.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>protoBar1</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main>
+    <h1>Current bar: original</h1>
 
-    <header>
-<!-- !!!!! -->
-<!--    change this to your preferred online name  -->
-        <h1>Neo Serad's Interface Design and Development Work</h1>
-    </header>
-
-    <div class="mainNavContainer">
-
-        <nav>
-            <a href="a1.html">Assignment 1</a>
-            <a href="a2.html">Assignment 2</a>
-            <a href="a3.html">Assignment 3</a>
-        </nav>
-
-        <main>
-            <section id="intro-section">
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto asperiores deleniti, dolore, fugiat harum ipsum magni natus nemo nobis quos, totam veniam. Assumenda eaque labore minus praesentium quidem sapiente?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto asperiores deleniti, dolore, fugiat harum ipsum magni natus nemo nobis quos, totam veniam. Assumenda eaque labore minus praesentium quidem sapiente?</p>
-            </section>
-        </main>
-
-        <!-- this is an empty element which helps with spacing -->
-        <aside></aside>
-
+    <!-- div to group the entire timeline including the heading together -->
+    <div class="timeline-wrap">
+        <!-- haeding div -->
+      <div class="label">Current bar</div>
+        <!-- div for the dots moving along an animated conveyor -->
+      <div class="timeline" id="timeline">
+        <!-- div for the playhead -->
+        <div class="playhead"></div>
+      </div>
     </div>
+  </main>
 
-    <footer>
-        <p>
-<!-- !!!!! -->
-<!--    change this to your preferred online name and update link to refer to your github page  -->
-            Page maintained by:
-            <a href="https://github.com/neosiruhhd" target="_blank">
-            Neo Serad
-            </a>
-        </p>
-    </footer>
+  <script src="script.js"></script>
 </body>
 </html>
