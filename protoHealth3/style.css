@@ -1,0 +1,43 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #111111;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 32px 16px;
+}
+
+h1 { font-size: 20px; font-weight: 600; margin: 0 0 12px; }
+
+.heart { width: 280px; height: auto; max-width: 100%; }
+
+/* this is stating the different styling colours for each of the layers of the heart */
+.empty { fill: #e0e0e0; }
+.full { fill: #c62828; }
+.outline { fill: none; stroke: #999999; stroke-width: 1; }
+
+/* this styling smoothens the drop or increase in health fill */
+#level { transition: transform 0.25s ease; }
+
+label { font-size: 14px; color: #555555; }
+
+.hp-row { display: flex; align-items: center; gap: 8px; font-size: 20px; }
+
+input {
+  width: 5em;
+  font: inherit;
+  padding: 4px 6px;
+  border: 1px solid #999999;
+  border-radius: 4px;
+  transition: box-shadow 0.4s ease;
+}
+
+.glow { box-shadow: 0 0 0 3px #2f6fed, 0 0 18px 6px rgba(47, 111, 237, 0.55); }
