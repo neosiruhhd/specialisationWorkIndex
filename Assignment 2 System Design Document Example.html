@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<!-- saved from url=(0083)https://rmit-idad-2650-thur.github.io/specialisationWorkIndex-thur/assignment2.html -->
+<html lang="en" data-darkreader-proxy-injected="true"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Assignment 2</title>
+
+    <!-- favicon was sourced from favicon.io but the original graphics are copyright 2020 Twitter, Inc
+    and other contributors -->
+    <!-- They are licensed under CC-BY 4.0 as linked below -->
+    <!-- https://creativecommons.org/licenses/by/4.0/ -->
+    <link rel="icon" type="image/png" href="https://rmit-idad-2650-thur.github.io/specialisationWorkIndex-thur/assets/icons/favicon.png">
+
+    <link rel="stylesheet" href="./Assignment 2 System Design Document Example_files/reset.css">
+    <link rel="stylesheet" href="./Assignment 2 System Design Document Example_files/style.css">
+<style>undefined</style><link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin="use-credentials"><link rel="preconnect" href="https://fonts.gstatic.com/"><link rel="stylesheet" href="./Assignment 2 System Design Document Example_files/css2"></head>
+<body cz-shortcut-listen="true">
+
+<header>
+    <h1>Parallel Prototypes</h1>
+</header>
+
+<div class="mainNavContainer">
+
+    <nav>
+        <a href="https://rmit-idad-2650-thur.github.io/specialisationWorkIndex-thur/index.html">Home Page</a>
+        <a href="https://rmit-idad-2650-thur.github.io/specialisationWorkIndex-thur/assignment1.html">Assignment 1</a>
+    </nav>
+
+    <main>
+
+        <section id="scenario-section">
+
+            <h3 class="firstSectionHeading">Information Design Prototypes</h3>
+
+            <p>
+                My first area of exploration is related to the information design of my sequencer. While there were
+                multiple elements whose specific information design went through iterative stages, such as the note
+                input box, I felt that the area which would benefit most from feedback from my peers would be the
+                overall layout of the sequencer steps. While modern DAWs have somewhat solidified the western musical
+                notation understanding of writing notes, from left to right, there exist a few different lineages of
+                hardware and software sequencers who approach this from different angles.
+            </p>
+
+            <p>
+                I am concerned with a couple of different aspects related to the layout's information design. Firstly,
+                approachability - how does its initial readability allow for users to conceptualise the steps. Beyond
+                first impressions I am also concerned with how it helps users to explore the loop as a repeated structure,
+                especially in line with the reset functionality. One element that is not directly communicated/tested
+                within the prototypes, but might be important to future development is scalability - how might the
+                layout accommodate extra steps or controls per step.
+            </p>
+
+            <h4>
+                <a href="https://p-mcmahon-rmit.github.io/sequencer-prototype-layout_1/" target="_blank">
+                    Prototype 1: Vertical Layout
+                </a>
+            </h4>
+
+            <p>
+                This prototype was my initial design, inspired by
+                <a href="https://www.soundtracker-museum.com/index.php">audio tracker software</a>. I suspect that the
+                verticality was more to do with the GUI limitations of the early hardware, but this is what got me
+                interested in exploring design the area. The amount of text involved in a single step can more easily
+                be displayed in this orientation, rather than having to turn your head to read this if it was laid out
+                horizontally.
+            </p>
+
+            <details>
+                <summary>Commit Logs</summary>
+                <table>
+
+                    <thead><tr>
+
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Body</th>
+
+                    </tr></thead>
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 12:58:12 2025 +1000</td>
+                        <td>uploaded prototype</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 15:38:28 2025 +1000</td>
+                        <td>added default example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Wed Sep 10 08:15:26 2025 +1000</td>
+                        <td>added in nav</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 09:58:44 2026 +1100</td>
+                        <td>add to webstorm</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:00:30 2026 +1100</td>
+                        <td>remove default</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:45:59 2026 +1100</td>
+                        <td>Update index.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 13:33:41 2026 +1100</td>
+                        <td>examples for class</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>hase</td>
+                        <td>Fri Apr 10 09:51:23 2026 +1000</td>
+                        <td>fixed examples</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Apr 13 13:34:21 2026 +1000</td>
+                        <td>remove tooltips</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:39:33 2026 +1000</td>
+                        <td>fixed labels</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:40:58 2026 +1000</td>
+                        <td>Merge branch 'learnability'</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:50:45 2026 +1000</td>
+                        <td>setup for explorative test example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 09:27:36 2026 +1000</td>
+                        <td>Update radioTest.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 13:59:16 2026 +1000</td>
+                        <td>extra radio test</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:19:31 2026 +1000</td>
+                        <td>cleanup</td>
+                        <td>I got rid of the extra code from the main branch that was needed for the learnability exercise</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:22:55 2026 +1000</td>
+                        <td>extra cleanup</td>
+                        <td>got rid of extra css and html</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:50:09 2026 +1000</td>
+                        <td>added in new input method</td>
+                        <td>updated input to now be its own set of elements,  which handles note values</td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </details>
+
+            <h4>
+                <a href="https://p-mcmahon-rmit.github.io/sequencer-prototype-layout_2/" target="_blank">
+                    Prototype 2: Horizontal Layout
+                </a>
+            </h4>
+
+            <p>
+                This prototype was my first variation, moving from vertical to the more typical left to right horizontal
+                orientation of DAWs and western musical notation. As noted above, the amount of information displayed
+                per step would really change the feel of using this. This isn't a particularly novel layout to explore
+                but it provides a helpful reference point to the other two.
+            </p>
+
+            <details>
+                <summary>Commit Logs</summary>
+                <table>
+
+                    <thead><tr>
+
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Body</th>
+
+                    </tr></thead>
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 12:58:12 2025 +1000</td>
+                        <td>uploaded prototype</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 15:38:28 2025 +1000</td>
+                        <td>added default example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Wed Sep 10 08:15:26 2025 +1000</td>
+                        <td>added in nav</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 09:58:44 2026 +1100</td>
+                        <td>add to webstorm</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:00:30 2026 +1100</td>
+                        <td>remove default</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:45:59 2026 +1100</td>
+                        <td>Update index.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 13:33:41 2026 +1100</td>
+                        <td>examples for class</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>hase</td>
+                        <td>Fri Apr 10 09:51:23 2026 +1000</td>
+                        <td>fixed examples</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Apr 13 13:34:21 2026 +1000</td>
+                        <td>remove tooltips</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:39:33 2026 +1000</td>
+                        <td>fixed labels</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:40:58 2026 +1000</td>
+                        <td>Merge branch 'learnability'</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:50:45 2026 +1000</td>
+                        <td>setup for explorative test example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 09:27:36 2026 +1000</td>
+                        <td>Update radioTest.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 13:59:16 2026 +1000</td>
+                        <td>extra radio test</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:19:31 2026 +1000</td>
+                        <td>cleanup</td>
+                        <td>I got rid of the extra code from the main branch that was needed for the learnability exercise</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:22:55 2026 +1000</td>
+                        <td>extra cleanup</td>
+                        <td>got rid of extra css and html</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:23:47 2026 +1000</td>
+                        <td>more cleanup</td>
+                        <td>got rid of more css and html</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:43:43 2026 +1000</td>
+                        <td>restructured layout</td>
+                        <td>made it a row layout,  which kind of works,  but necessitated different elements. this has messed with the pitch input detection so i need to go back an make that better</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:50:09 2026 +1000</td>
+                        <td>added in new input method</td>
+                        <td>updated input to now be its own set of elements,  which handles note values</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:51:30 2026 +1000</td>
+                        <td>Merge branch 'layoutExplorationOne' into layoutExplorationTwo</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:59:28 2026 +1000</td>
+                        <td>fixed layout</td>
+                        <td>added seperate label and mae the layout display as a row</td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </details>
+
+            <h4>
+                <a href="https://p-mcmahon-rmit.github.io/sequencer-prototype-layout_3/" target="_blank">
+                    Prototype 3: Circular Layout
+                </a>
+            </h4>
+
+            <p>
+                Finally, we have the more adventurous circular layout, based on the
+                <a href="https://synthpedia.net/future-retro/orb-sequencer/" target="_blank">
+                    Future Retro Orb Sequencer
+                </a>. As mentioned in the area introduction, I'm interested in conceptualising loops as a repetitive
+                structure, so borrowing from the layout of something like a clock makes sense here - the last step is
+                now next to the first rather than the furtherest from it.
+            </p>
+
+            <details>
+                <summary>Commit Logs</summary>
+                <table>
+
+                    <thead><tr>
+
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Subject</th>
+                        <th>Body</th>
+
+                    </tr></thead>
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 12:58:12 2025 +1000</td>
+                        <td>uploaded prototype</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Sep 8 15:38:28 2025 +1000</td>
+                        <td>added default example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Wed Sep 10 08:15:26 2025 +1000</td>
+                        <td>added in nav</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 09:58:44 2026 +1100</td>
+                        <td>add to webstorm</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:00:30 2026 +1100</td>
+                        <td>remove default</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 10:45:59 2026 +1100</td>
+                        <td>Update index.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Apr 2 13:33:41 2026 +1100</td>
+                        <td>examples for class</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>hase</td>
+                        <td>Fri Apr 10 09:51:23 2026 +1000</td>
+                        <td>fixed examples</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon Apr 13 13:34:21 2026 +1000</td>
+                        <td>remove tooltips</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:39:33 2026 +1000</td>
+                        <td>fixed labels</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:40:58 2026 +1000</td>
+                        <td>Merge branch 'learnability'</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Mon May 4 09:50:45 2026 +1000</td>
+                        <td>setup for explorative test example</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 09:27:36 2026 +1000</td>
+                        <td>Update radioTest.html</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 13:59:16 2026 +1000</td>
+                        <td>extra radio test</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:19:31 2026 +1000</td>
+                        <td>cleanup</td>
+                        <td>I got rid of the extra code from the main branch that was needed for the learnability exercise</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:22:55 2026 +1000</td>
+                        <td>extra cleanup</td>
+                        <td>got rid of extra css and html</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:23:47 2026 +1000</td>
+                        <td>more cleanup</td>
+                        <td>got rid of more css and html</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 14:43:43 2026 +1000</td>
+                        <td>restructured layout</td>
+                        <td>made it a row layout,  which kind of works,  but necessitated different elements. this has messed with the pitch input detection so i need to go back an make that better</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:50:09 2026 +1000</td>
+                        <td>added in new input method</td>
+                        <td>updated input to now be its own set of elements,  which handles note values</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:51:30 2026 +1000</td>
+                        <td>Merge branch 'layoutExplorationOne' into layoutExplorationTwo</td>
+                        <td></td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 15:59:28 2026 +1000</td>
+                        <td>fixed layout</td>
+                        <td>added seperate label and mae the layout display as a row</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Patrick McMahon</td>
+                        <td>Thu Aug 6 16:11:32 2026 +1000</td>
+                        <td>made circular layout</td>
+                        <td>used combo of grid and nth child to get the circle display</td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+            </details>
+
+        </section>
+
+        <section>
+            <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=cTYy0b7NF0S01L2yS1Exa1JJnBKAnx1Dtt_HXcEV8DhUM0lMOE1TQlNRMkQxRVZWNkZWSUdDQklINi4u">
+                Peer User Testing Form
+            </a>
+        </section>
+
+    </main>
+
+    <!-- this is an empty element which helps with spacing -->
+    <aside></aside>
+
+</div>
+
+<footer>
+    <p>
+        Page maintained by:
+        <a href="https://github.com/p-mcmahon-rmit/" target="_blank">
+            Patrick McMahon
+        </a>
+        <a href="https://au.miro.com/app/board/u3jVOf6GvjM=/?share_link_id=172045544644">
+            Community of Practice Documentation
+        </a>
+    </p>
+</footer>
+
+</body></html>
