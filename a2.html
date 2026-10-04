@@ -6,12 +6,12 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<!-- !!!!! -->
-<!--    change this to refer to your specific page  -->
+    <!-- !!!!! -->
+    <!--    change this to refer to your specific page  -->
     <title>Assignment 2</title>
 
-<!-- !!!!! -->
-<!--  change this to your preferred icon  -->
+    <!-- !!!!! -->
+    <!--  change this to your preferred icon  -->
     <!-- favicon was sourced from favicon.io but the original graphics are copyright 2020 Twitter, Inc
     and other contributors -->
     <!-- They are licensed under CC-BY 4.0 as linked below -->
@@ -24,8 +24,8 @@
 <body>
 
     <header>
-<!-- !!!!! -->
-<!--    change this to your preferred online name  -->
+        <!-- !!!!! -->
+        <!--    change this to your preferred online name  -->
         <h1>A2 System Design Document</h1>
     </header>
 
@@ -38,51 +38,102 @@
         </nav>
 
         <main>
-            
+
             <section>
-            <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=cTYy0b7NF0S01L2yS1Exa1JJnBKAnx1Dtt_HXcEV8DhUM0lMOE1TQlNRMkQxRVZWNkZWSUdDQklINi4u">
-                Peer User Testing Form
-            </a>
+                <a href="https://forms.cloud.microsoft/r/s1xiEcVnmN">
+                    Peer User Testing Form
+                </a>
             </section>
 
             <section class="assignmentBodies">
-                
-                <h1>protoHealth1</h1>
+
+                <h1>Health Display Prototypes</h1>
+
+                <p>
+                    My first area of exploration is how Sirens.io represents health. As a back-end tool, its interface needs to
+                    show the DM how much health is left at a glance during a session. I designed my health prototypes across a
+                    variety of styles to work out which way of representing this information suits that kind of interface best.
+                </p>
+
+                <h2>protoHealth1: Vertical Bar</h2>
+
+                <p>
+                    My first prototype is a basic, standard health bar, based on how health is shown across a wide variety of
+                    media. It works almost as a benchmark. By including the typical interface, I can see how testers receive it
+                    compared to the more stylised versions in protoHealth2 and protoHealth3.
+                </p>
+
                 <h4>
                     <a href="https://protohealth1.github.io/specialisationWorkIndex-FIX/" target="_blank">
                         protoHealth1
                     </a>
                 </h4>
-                    <p>something</p>
-                <h1>protoHealth2</h1>
+
+                <h2>protoHealth2: Circle</h2>
+
+                <p>
+                    My second prototype takes more inspiration from video game interfaces, changing the bar into a ring that
+                    empties clockwise from the top. I'm curious to see whether users view the circle as more or less appealing
+                    than the typical vertical bar.
+                </p>
+
                 <h4>
                     <a href="https://protohealth2.github.io/specialisationWorkIndex/" target="_blank">
                         protoHealth2
                     </a>
                 </h4>
-                    <p> something</p>
-                <h1>protoHealth3</h1>
+
+                <h2>protoHealth3: Heart</h2>
+
+                <p>
+                    My third prototype works very similarly to my first, but uses the shape of a heart instead, with the health
+                    points draining from it like liquid from a glass. Because the heart is wider at the top, the red area shrinks
+                    faster than the HP in the first half, and I'm interested to see whether testers notice this.
+                </p>
+
                 <h4>
                     <a href="https://protohealth3.github.io/specialisationWorkIndex/" target="_blank">
                         protoHealth3
                     </a>
                 </h4>
-                    <p> something</p>
-                <h1>protoBar1</h1>
+
+                <h1>Current Bar Prototypes</h1>
+
+                <p>
+                    My second area of exploration is how best to convey time and musical beats in a visual interface. Both
+                    prototypes run at 140 BPM, with the section colour changing every 4 bars to stand in for the music changing.
+                    I was curious to find out whether simpler, more stripped-back UIs would be favoured over more detailed and
+                    informative ones.
+                </p>
+
+                <h2>protoBar1: Original Conveyor</h2>
+
+                <p>
+                    My first prototype has the basic conveyor function, with the bars moving from right to left under a fixed
+                    playhead. For me, this UI is enough on its own: as soon as I see the dots move from right to left twice, I can
+                    infer the tempo of the song. However, it may not be enough for others who aren't as musically inclined.
+                </p>
+
                 <h4>
                     <a href="https://protobar1.github.io/specialisationWorkIndex/" target="_blank">
                         protoBar1
                     </a>
                 </h4>
-                    <p> something</p>
-                <h1>protoBar2</h1>
+
+                <h2>protoBar2: Bouncing Arrow</h2>
+
+                <p>
+                    My second prototype builds on the first by adding a bouncing arrow, which lands on the current bar each time
+                    to help mark out the pacing of the song. I took inspiration from karaoke interfaces, which highlight the
+                    lyrics at a set rate to show how fast you should be singing a line.
+                </p>
+
                 <h4>
                     <a href="https://protobar2.github.io/specialisationWorkIndex/" target="_blank">
                         protoBar2
                     </a>
                 </h4>
-                    <p> something</p>
-                
+
             </section>
 
             <section class="commitLogs">
@@ -102,189 +153,190 @@
 
                         <tbody>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 09:14:59 2026 +1000</td>
-                            <td>init</td>
-                            <td>set up and linked basic files</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 09:14:59 2026 +1000</td>
+                                <td>init</td>
+                                <td>set up and linked basic files</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 11:10:13 2026 +1000</td>
-                            <td>responsiveness</td>
-                            <td>added in grid template for the four areas to shift based on screen width</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 11:10:13 2026 +1000</td>
+                                <td>responsiveness</td>
+                                <td>added in grid template for the four areas to shift based on screen width</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 12:03:25 2026 +1000</td>
-                            <td>more responsiveq</td>
-                            <td>fixed grid issues of overflow. added a max width to text</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 12:03:25 2026 +1000</td>
+                                <td>more responsiveq</td>
+                                <td>fixed grid issues of overflow. added a max width to text</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 13:00:32 2026 +1000</td>
-                            <td>moved to flex in flex</td>
-                            <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 13:00:32 2026 +1000</td>
+                                <td>moved to flex in flex</td>
+                                <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>Patrick McMahon</td>
-                            <td>Thu Jul 16 10:45:35 2026 +1000</td>
-                            <td>change favicon and remove unnecessary sections</td>
-                            <td></td>
+                                <td>Patrick McMahon</td>
+                                <td>Thu Jul 16 10:45:35 2026 +1000</td>
+                                <td>change favicon and remove unnecessary sections</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 11:55:23 2026 +1000</td>
-                            <td>Title header and footer changes</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 11:55:23 2026 +1000</td>
+                                <td>Title header and footer changes</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 12:09:57 2026 +1000</td>
-                            <td>changed favicon to skull</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 12:09:57 2026 +1000</td>
+                                <td>changed favicon to skull</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Aug 6 12:14:31 2026 +1000</td>
-                            <td>duplicated index + added COP link</td>
-                            <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Aug 6 12:14:31 2026 +1000</td>
+                                <td>duplicated index + added COP link</td>
+                                <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:15:29 2026 +1000</td>
-                            <td>assignmentBodies section text push</td>
-                            <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:15:29 2026 +1000</td>
+                                <td>assignmentBodies section text push</td>
+                                <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:16:27 2026 +1000</td>
-                            <td>capitalisation and domain name commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:16:27 2026 +1000</td>
+                                <td>capitalisation and domain name commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:26:36 2026 +1000</td>
-                            <td>image and header padding commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:26:36 2026 +1000</td>
+                                <td>image and header padding commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:35:16 2026 +1000</td>
-                            <td>padding changes to css commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:35:16 2026 +1000</td>
+                                <td>padding changes to css commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:04:59 2026 +1000</td>
-                            <td>Refresh</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:04:59 2026 +1000</td>
+                                <td>Refresh</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:17:24 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:17:24 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:32:27 2026 +1000</td>
-                            <td>First commit</td>
-                            <td>added html css and js files,  added head and first heading to html</td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:32:27 2026 +1000</td>
+                                <td>First commit</td>
+                                <td>added html css and js files,  added head and first heading to html</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:48:08 2026 +1000</td>
-                            <td>html commit</td>
-                            <td>base html written with comments that i can look back on in case i forget how some of the code works,  moving on to css now.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:48:08 2026 +1000</td>
+                                <td>html commit</td>
+                                <td>base html written with comments that i can look back on in case i forget how some of the code works,  moving on to css now.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 13:14:19 2026 +1000</td>
-                            <td>css commit</td>
-                            <td>written css,  some of the styling isnt visible yet as it needs to be activated by js,  so will go back and make changes to css if necessary. moving onto js.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 13:14:19 2026 +1000</td>
+                                <td>css commit</td>
+                                <td>written css,  some of the styling isnt visible yet as it needs to be activated by js,  so will go back and make changes to css if necessary. moving onto js.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 13:13:38 2026 +1100</td>
-                            <td>js commit</td>
-                            <td>finished writing up the js,  had to get ai to explain some concepts to me,  especially the ones that used a lot of mathematical shorthand.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 13:13:38 2026 +1100</td>
+                                <td>js commit</td>
+                                <td>finished writing up the js,  had to get ai to explain some concepts to me,  especially the ones that used a lot of mathematical shorthand.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:23:53 2026 +1100</td>
-                            <td>idle ms commit</td>
-                            <td>changed the duration that the tester needs to wait to see the mouseover event to 3 seconds</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:23:53 2026 +1100</td>
+                                <td>idle ms commit</td>
+                                <td>changed the duration that the tester needs to wait to see the mouseover event to 3 seconds</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:22:41 2026 +1100</td>
-                            <td>parallel branches fix</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:22:41 2026 +1100</td>
+                                <td>parallel branches fix</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
                         </tbody>
 
-                    </table></details>
+                    </table>
+                </details>
 
                 <!-- ===== protoHealth2 commit logs ===== -->
                 <details>
@@ -302,180 +354,181 @@
 
                         <tbody>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 09:14:59 2026 +1000</td>
-                            <td>init</td>
-                            <td>set up and linked basic files</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 09:14:59 2026 +1000</td>
+                                <td>init</td>
+                                <td>set up and linked basic files</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 11:10:13 2026 +1000</td>
-                            <td>responsiveness</td>
-                            <td>added in grid template for the four areas to shift based on screen width</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 11:10:13 2026 +1000</td>
+                                <td>responsiveness</td>
+                                <td>added in grid template for the four areas to shift based on screen width</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 12:03:25 2026 +1000</td>
-                            <td>more responsiveq</td>
-                            <td>fixed grid issues of overflow. added a max width to text</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 12:03:25 2026 +1000</td>
+                                <td>more responsiveq</td>
+                                <td>fixed grid issues of overflow. added a max width to text</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 13:00:32 2026 +1000</td>
-                            <td>moved to flex in flex</td>
-                            <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 13:00:32 2026 +1000</td>
+                                <td>moved to flex in flex</td>
+                                <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>Patrick McMahon</td>
-                            <td>Thu Jul 16 10:45:35 2026 +1000</td>
-                            <td>change favicon and remove unnecessary sections</td>
-                            <td></td>
+                                <td>Patrick McMahon</td>
+                                <td>Thu Jul 16 10:45:35 2026 +1000</td>
+                                <td>change favicon and remove unnecessary sections</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 11:55:23 2026 +1000</td>
-                            <td>Title header and footer changes</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 11:55:23 2026 +1000</td>
+                                <td>Title header and footer changes</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 12:09:57 2026 +1000</td>
-                            <td>changed favicon to skull</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 12:09:57 2026 +1000</td>
+                                <td>changed favicon to skull</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Aug 6 12:14:31 2026 +1000</td>
-                            <td>duplicated index + added COP link</td>
-                            <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Aug 6 12:14:31 2026 +1000</td>
+                                <td>duplicated index + added COP link</td>
+                                <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:15:29 2026 +1000</td>
-                            <td>assignmentBodies section text push</td>
-                            <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:15:29 2026 +1000</td>
+                                <td>assignmentBodies section text push</td>
+                                <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:16:27 2026 +1000</td>
-                            <td>capitalisation and domain name commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:16:27 2026 +1000</td>
+                                <td>capitalisation and domain name commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:26:36 2026 +1000</td>
-                            <td>image and header padding commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:26:36 2026 +1000</td>
+                                <td>image and header padding commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:35:16 2026 +1000</td>
-                            <td>padding changes to css commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:35:16 2026 +1000</td>
+                                <td>padding changes to css commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:04:59 2026 +1000</td>
-                            <td>Refresh</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:04:59 2026 +1000</td>
+                                <td>Refresh</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:31 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:31 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:52 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:52 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:22:41 2026 +1100</td>
-                            <td>protohealth2 commit</td>
-                            <td>was able to copy and paste a lot of the functionalities from protoHealth1,  with the exception of the recalculations of how hp was visualised onto the circular health bar,  comments where new code is</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:22:41 2026 +1100</td>
+                                <td>protohealth2 commit</td>
+                                <td>was able to copy and paste a lot of the functionalities from protoHealth1,  with the exception of the recalculations of how hp was visualised onto the circular health bar,  comments where new code is</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:24:14 2026 +1100</td>
-                            <td>Create .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:24:14 2026 +1100</td>
+                                <td>Create .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:28:27 2026 +1100</td>
-                            <td>branch fix commit</td>
-                            <td>realised that i was putting multiple prototypes into the same branch,  resolving now</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:28:27 2026 +1100</td>
+                                <td>branch fix commit</td>
+                                <td>realised that i was putting multiple prototypes into the same branch,  resolving now</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:26:24 2026 +1100</td>
-                            <td>parallel branches fix</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:26:24 2026 +1100</td>
+                                <td>parallel branches fix</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
                         </tbody>
 
-                    </table></details>
+                    </table>
+                </details>
 
                 <!-- ===== protoHealth3 commit logs ===== -->
                 <details>
@@ -493,225 +546,226 @@
 
                         <tbody>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 09:14:59 2026 +1000</td>
-                            <td>init</td>
-                            <td>set up and linked basic files</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 09:14:59 2026 +1000</td>
+                                <td>init</td>
+                                <td>set up and linked basic files</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 11:10:13 2026 +1000</td>
-                            <td>responsiveness</td>
-                            <td>added in grid template for the four areas to shift based on screen width</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 11:10:13 2026 +1000</td>
+                                <td>responsiveness</td>
+                                <td>added in grid template for the four areas to shift based on screen width</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 12:03:25 2026 +1000</td>
-                            <td>more responsiveq</td>
-                            <td>fixed grid issues of overflow. added a max width to text</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 12:03:25 2026 +1000</td>
+                                <td>more responsiveq</td>
+                                <td>fixed grid issues of overflow. added a max width to text</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 13:00:32 2026 +1000</td>
-                            <td>moved to flex in flex</td>
-                            <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 13:00:32 2026 +1000</td>
+                                <td>moved to flex in flex</td>
+                                <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>Patrick McMahon</td>
-                            <td>Thu Jul 16 10:45:35 2026 +1000</td>
-                            <td>change favicon and remove unnecessary sections</td>
-                            <td></td>
+                                <td>Patrick McMahon</td>
+                                <td>Thu Jul 16 10:45:35 2026 +1000</td>
+                                <td>change favicon and remove unnecessary sections</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 11:55:23 2026 +1000</td>
-                            <td>Title header and footer changes</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 11:55:23 2026 +1000</td>
+                                <td>Title header and footer changes</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 12:09:57 2026 +1000</td>
-                            <td>changed favicon to skull</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 12:09:57 2026 +1000</td>
+                                <td>changed favicon to skull</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Aug 6 12:14:31 2026 +1000</td>
-                            <td>duplicated index + added COP link</td>
-                            <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Aug 6 12:14:31 2026 +1000</td>
+                                <td>duplicated index + added COP link</td>
+                                <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:15:29 2026 +1000</td>
-                            <td>assignmentBodies section text push</td>
-                            <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:15:29 2026 +1000</td>
+                                <td>assignmentBodies section text push</td>
+                                <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:16:27 2026 +1000</td>
-                            <td>capitalisation and domain name commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:16:27 2026 +1000</td>
+                                <td>capitalisation and domain name commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:26:36 2026 +1000</td>
-                            <td>image and header padding commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:26:36 2026 +1000</td>
+                                <td>image and header padding commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:35:16 2026 +1000</td>
-                            <td>padding changes to css commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:35:16 2026 +1000</td>
+                                <td>padding changes to css commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:04:59 2026 +1000</td>
-                            <td>Refresh</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:04:59 2026 +1000</td>
+                                <td>Refresh</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:31 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:31 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:52 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:52 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:09 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:09 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:24 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:24 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:34 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:34 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:41 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:41 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:29:33 2026 +1100</td>
-                            <td>2nd branch commit fix</td>
-                            <td>more cleanup</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:29:33 2026 +1100</td>
+                                <td>2nd branch commit fix</td>
+                                <td>more cleanup</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:35:15 2026 +1100</td>
-                            <td>html commit for protohealth3</td>
-                            <td>very similar to elements in both proto1 and 2,  but with a slight variation as i am using a rectangle that goes over the entire heart and applying it as a matte to look like a fill.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:35:15 2026 +1100</td>
+                                <td>html commit for protohealth3</td>
+                                <td>very similar to elements in both proto1 and 2,  but with a slight variation as i am using a rectangle that goes over the entire heart and applying it as a matte to look like a fill.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:39:32 2026 +1100</td>
-                            <td>css commit</td>
-                            <td>very minimal changes from other prototypes,  just have a different way of styling each layer of the heart in that they are all divided to their own styling classes of .empty,  .full,  .outline</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:39:32 2026 +1100</td>
+                                <td>css commit</td>
+                                <td>very minimal changes from other prototypes,  just have a different way of styling each layer of the heart in that they are all divided to their own styling classes of .empty,  .full,  .outline</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:49:54 2026 +1100</td>
-                            <td>js commit</td>
-                            <td>the js for protohealth3 was very different but a lot simpler than the others,  as it was just a matter of moving a rectangle matte from top to bottom and translating the values of the hp to a y position along the shape of the heart.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:49:54 2026 +1100</td>
+                                <td>js commit</td>
+                                <td>the js for protohealth3 was very different but a lot simpler than the others,  as it was just a matter of moving a rectangle matte from top to bottom and translating the values of the hp to a y position along the shape of the heart.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:28:05 2026 +1100</td>
-                            <td>parallel prototypes fix</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:28:05 2026 +1100</td>
+                                <td>parallel prototypes fix</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
                         </tbody>
 
-                    </table></details>
+                    </table>
+                </details>
 
                 <!-- ===== protoBar1 commit logs ===== -->
                 <details>
@@ -729,216 +783,217 @@
 
                         <tbody>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 09:14:59 2026 +1000</td>
-                            <td>init</td>
-                            <td>set up and linked basic files</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 09:14:59 2026 +1000</td>
+                                <td>init</td>
+                                <td>set up and linked basic files</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 11:10:13 2026 +1000</td>
-                            <td>responsiveness</td>
-                            <td>added in grid template for the four areas to shift based on screen width</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 11:10:13 2026 +1000</td>
+                                <td>responsiveness</td>
+                                <td>added in grid template for the four areas to shift based on screen width</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 12:03:25 2026 +1000</td>
-                            <td>more responsiveq</td>
-                            <td>fixed grid issues of overflow. added a max width to text</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 12:03:25 2026 +1000</td>
+                                <td>more responsiveq</td>
+                                <td>fixed grid issues of overflow. added a max width to text</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 13:00:32 2026 +1000</td>
-                            <td>moved to flex in flex</td>
-                            <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 13:00:32 2026 +1000</td>
+                                <td>moved to flex in flex</td>
+                                <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>Patrick McMahon</td>
-                            <td>Thu Jul 16 10:45:35 2026 +1000</td>
-                            <td>change favicon and remove unnecessary sections</td>
-                            <td></td>
+                                <td>Patrick McMahon</td>
+                                <td>Thu Jul 16 10:45:35 2026 +1000</td>
+                                <td>change favicon and remove unnecessary sections</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 11:55:23 2026 +1000</td>
-                            <td>Title header and footer changes</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 11:55:23 2026 +1000</td>
+                                <td>Title header and footer changes</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 12:09:57 2026 +1000</td>
-                            <td>changed favicon to skull</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 12:09:57 2026 +1000</td>
+                                <td>changed favicon to skull</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Aug 6 12:14:31 2026 +1000</td>
-                            <td>duplicated index + added COP link</td>
-                            <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Aug 6 12:14:31 2026 +1000</td>
+                                <td>duplicated index + added COP link</td>
+                                <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:15:29 2026 +1000</td>
-                            <td>assignmentBodies section text push</td>
-                            <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:15:29 2026 +1000</td>
+                                <td>assignmentBodies section text push</td>
+                                <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:16:27 2026 +1000</td>
-                            <td>capitalisation and domain name commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:16:27 2026 +1000</td>
+                                <td>capitalisation and domain name commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:26:36 2026 +1000</td>
-                            <td>image and header padding commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:26:36 2026 +1000</td>
+                                <td>image and header padding commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:35:16 2026 +1000</td>
-                            <td>padding changes to css commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:35:16 2026 +1000</td>
+                                <td>padding changes to css commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:04:59 2026 +1000</td>
-                            <td>Refresh</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:04:59 2026 +1000</td>
+                                <td>Refresh</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:31 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:31 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:52 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:52 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:09 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:09 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:24 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:24 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:50:15 2026 +1100</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:50:15 2026 +1100</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:50:16 2026 +1100</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:50:16 2026 +1100</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 14:59:11 2026 +1100</td>
-                            <td>initial html commit</td>
-                            <td>basic head and div set up for styling and programming.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 14:59:11 2026 +1100</td>
+                                <td>initial html commit</td>
+                                <td>basic head and div set up for styling and programming.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 15:35:53 2026 +1100</td>
-                            <td>css commit</td>
-                            <td>most of the styling is simple,  but the colour styling for the dots is derived from the colour array in js</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 15:35:53 2026 +1100</td>
+                                <td>css commit</td>
+                                <td>most of the styling is simple,  but the colour styling for the dots is derived from the colour array in js</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 15:49:20 2026 +1100</td>
-                            <td>script commit</td>
-                            <td>very complicated when trying to understand the for,  if,  and else statements,  but all contribute to identifying whether a dot is within the normal range to be moved right to left,  and whether it is being 'spawned' or 'killed off'.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 15:49:20 2026 +1100</td>
+                                <td>script commit</td>
+                                <td>very complicated when trying to understand the for,  if,  and else statements,  but all contribute to identifying whether a dot is within the normal range to be moved right to left,  and whether it is being 'spawned' or 'killed off'.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:32:19 2026 +1100</td>
-                            <td>parallel prototypes fix</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:32:19 2026 +1100</td>
+                                <td>parallel prototypes fix</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
                         </tbody>
 
-                    </table></details>
+                    </table>
+                </details>
 
                 <!-- ===== protoBar2 commit logs ===== -->
                 <details>
@@ -956,190 +1011,193 @@
 
                         <tbody>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 09:14:59 2026 +1000</td>
-                            <td>init</td>
-                            <td>set up and linked basic files</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 09:14:59 2026 +1000</td>
+                                <td>init</td>
+                                <td>set up and linked basic files</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 11:10:13 2026 +1000</td>
-                            <td>responsiveness</td>
-                            <td>added in grid template for the four areas to shift based on screen width</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 11:10:13 2026 +1000</td>
+                                <td>responsiveness</td>
+                                <td>added in grid template for the four areas to shift based on screen width</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 12:03:25 2026 +1000</td>
-                            <td>more responsiveq</td>
-                            <td>fixed grid issues of overflow. added a max width to text</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 12:03:25 2026 +1000</td>
+                                <td>more responsiveq</td>
+                                <td>fixed grid issues of overflow. added a max width to text</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>hase</td>
-                            <td>Fri Jun 5 13:00:32 2026 +1000</td>
-                            <td>moved to flex in flex</td>
-                            <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
+                                <td>hase</td>
+                                <td>Fri Jun 5 13:00:32 2026 +1000</td>
+                                <td>moved to flex in flex</td>
+                                <td>grid wasn't quite cutting it so i moved to a nested flex situation for the main section. now hopefully should all work as intended</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>Patrick McMahon</td>
-                            <td>Thu Jul 16 10:45:35 2026 +1000</td>
-                            <td>change favicon and remove unnecessary sections</td>
-                            <td></td>
+                                <td>Patrick McMahon</td>
+                                <td>Thu Jul 16 10:45:35 2026 +1000</td>
+                                <td>change favicon and remove unnecessary sections</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 11:55:23 2026 +1000</td>
-                            <td>Title header and footer changes</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 11:55:23 2026 +1000</td>
+                                <td>Title header and footer changes</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Jul 23 12:09:57 2026 +1000</td>
-                            <td>changed favicon to skull</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Jul 23 12:09:57 2026 +1000</td>
+                                <td>changed favicon to skull</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Thu Aug 6 12:14:31 2026 +1000</td>
-                            <td>duplicated index + added COP link</td>
-                            <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
+                                <td>neosiruhhd</td>
+                                <td>Thu Aug 6 12:14:31 2026 +1000</td>
+                                <td>duplicated index + added COP link</td>
+                                <td>duplicated index 3 times as stand ins for the pages dedicated to the next 3 assignments,  also added Community of Practice link in the global footer</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:15:29 2026 +1000</td>
-                            <td>assignmentBodies section text push</td>
-                            <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:15:29 2026 +1000</td>
+                                <td>assignmentBodies section text push</td>
+                                <td>copied and pasted from my notion page,  given proper heading hierarchy</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:16:27 2026 +1000</td>
-                            <td>capitalisation and domain name commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:16:27 2026 +1000</td>
+                                <td>capitalisation and domain name commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:26:36 2026 +1000</td>
-                            <td>image and header padding commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:26:36 2026 +1000</td>
+                                <td>image and header padding commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Wed Aug 12 16:35:16 2026 +1000</td>
-                            <td>padding changes to css commit</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Wed Aug 12 16:35:16 2026 +1000</td>
+                                <td>padding changes to css commit</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:04:59 2026 +1000</td>
-                            <td>Refresh</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:04:59 2026 +1000</td>
+                                <td>Refresh</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:31 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:31 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:13:52 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:13:52 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:09 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:09 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sat Oct 3 12:14:24 2026 +1000</td>
-                            <td>Update .DS_Store</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sat Oct 3 12:14:24 2026 +1000</td>
+                                <td>Update .DS_Store</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 15:58:27 2026 +1100</td>
-                            <td>html commit</td>
-                            <td>the only change from the protobar1 is adding the svg of the arrow inside the timeline div.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 15:58:27 2026 +1100</td>
+                                <td>html commit</td>
+                                <td>the only change from the protobar1 is adding the svg of the arrow inside the timeline div.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:03:12 2026 +1100</td>
-                            <td>css and js commit</td>
-                            <td>js is the exact same as protobar1,  since its solely an independent animation controlled by css.</td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:03:12 2026 +1100</td>
+                                <td>css and js commit</td>
+                                <td>js is the exact same as protobar1,  since its solely an independent animation controlled by css.</td>
 
-                        </tr>
+                            </tr>
 
-                        <tr>
+                            <tr>
 
-                            <td>neosiruhhd</td>
-                            <td>Sun Oct 4 16:32:37 2026 +1100</td>
-                            <td>parallel prototype fix</td>
-                            <td></td>
+                                <td>neosiruhhd</td>
+                                <td>Sun Oct 4 16:32:37 2026 +1100</td>
+                                <td>parallel prototype fix</td>
+                                <td></td>
 
-                        </tr>
+                            </tr>
 
                         </tbody>
 
-                    </table></details>
-                            </section>
+                    </table>
+                </details>
+
+            </section>
+
         </main>
 
         <!-- this is an empty element which helps with spacing -->
@@ -1149,17 +1207,18 @@
 
     <footer>
         <p>
-<!-- !!!!! -->
-<!--    change this to your preferred online name and update link to refer to your github page  -->
+            <!-- !!!!! -->
+            <!--    change this to your preferred online name and update link to refer to your github page  -->
             Page maintained by:
             <a href="https://github.com/neosiruhhd" target="_blank">
-            Neo Serad
+                Neo Serad
             </a>
             Link to
             <a href="https://au.miro.com/app/board/u3jVOf5GcuI=/?share_link_id=470150661240" target="_blank">
-            Community of Practice
+                Community of Practice
             </a>
         </p>
     </footer>
+
 </body>
 </html>
