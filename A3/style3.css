@@ -1,0 +1,76 @@
+:root {
+    color-scheme: dark;
+
+    /* 'ink' will be used to class bg colours, 0 being the darkest. */
+    --ink-0: #0b0c0e;
+    --ink-1: #16171a;   
+    --ink-2: #111214;  
+
+    /* these colours are used for the hp styling */
+    --track: #2b2727; /* empty part of the ring */
+    --hpbox: #120708; /* core behind hp values */ 
+    --hp-a: #dc2626; /* red 'current' hp */
+
+    /* colours for text and lines */
+    --paper: #ffffff;
+    --text: #f1f1ef;
+    --muted: #8a8c90;
+    --line: #2a2c30;
+    --link: #1f4fff;
+
+    /* essentially need twice as many colours for the buttons since they have a gradient appearances, 'a' means gradient top, 'b' means gradient bottom, 't' is the colour of the text on top of it */
+    --btn-green-a: #5da52d;
+    --btn-green-b: #3a7a18;
+    --btn-green-t: #edf7e4;
+    --btn-grey-a: #b8babe;
+    --btn-grey-b: #8d8f94;
+    --btn-grey-t: #fbfbfb;
+    --btn-red-a: #a82424;
+    --btn-red-b: #7a1414;
+    --btn-red-t: #f6dede;
+    --btn-brown-a: #8d5c1d;
+    --btn-brown-b: #684010;
+    --btn-brown-t: #f3e5cf;
+
+    /* colours for the bar timeline */
+    --sec-intro: #CDD4DD;  /* intro and outro */
+    --sec-t1: #76D036;     /* 100-50% */
+    --sec-t2: #D0C336;     /* 50-35% */
+    --sec-t3: #D07636;     /* 35-20% */
+    --sec-t4: #CE3639;     /* 20-0% */
+
+    /* fonts with a system font fallback in case google is down */
+    --display: "MedievalSharp", serif;
+    --mono: "Xanh Mono", monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    height:100%;
+}
+
+body{
+    margin: 0;
+    background: var(--ink-1);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 16px;
+}
+
+/* since form controls dont take on the page font on default, gotta code it in explicitly */
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* this creates the bold outline for people using keyboard shortcuts such as tabbing to different elements */
+:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 2px;
+}
