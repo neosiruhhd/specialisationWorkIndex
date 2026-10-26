@@ -146,7 +146,7 @@ grid-template-areas names each region so the parts below can be placed by name. 
 /* ---------- Type ---------- */
 /* TYPE */
 
-.brand {
+.brand, .heading {
   margin: 0;
   font-family: var(--display);
   font-size: clamp(26px, 2.4vw, 44px);
@@ -401,4 +401,55 @@ grid-template-areas names each region so the parts below can be placed by name. 
 .setup .bad {
   border-color: var(--btn-red-a);
   box-shadow: 0 0 0 2px var(--btn-red-a);
+}
+
+/* COMBAT SCREEN */
+
+/* the white "end combat?" box that appears beside the end combat button */
+.confirm-box {
+  padding: .45em .9em;
+  border-radius: 4px;
+  background: var(--paper);
+  color: #111;
+  font-size: clamp(14px, 1.2vw, 21px);
+}
+
+.status {
+  min-height: 1em;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* in combat the names are plain text, not input boxes */
+.char-name {
+  min-height: 1em;
+  font-family: var(--display);
+  font-size: clamp(30px, 4.2vw, 78px);
+  line-height: 1;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* current hp sits on the ring with no visible box, so it reads like the setup numbers without the white fields */
+.combat .hp-cur {
+  width: 4.6ch;
+  padding: 0 .08em;
+  border: 2px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text);
+  transition: box-shadow .6s;
+}
+
+/* a disabled field normally greys its text but this code will keep it white */
+.combat .hp-cur:disabled {
+  color: var(--text);
+  -webkit-text-fill-color: var(--text);
+  opacity: 1;
+  cursor: default;
+}
+
+.combat .hp-max {
+  color: var(--muted);
 }
