@@ -426,7 +426,7 @@
     return tierFor(lowest);
   }
 
-  // when the dm hits the confirm button, locks in every typed value as the new confirmed hp, then works out which section the music should move to
+    // when the dm hits the confirm button, locks in every typed value as the new confirmed hp, then works out which section the music should move to
     function confirmHP() {
     if (!hpEditable()) return;
     for (const c of chars) {
@@ -435,6 +435,10 @@
       showChar(c);
     }
     desired = computeDesired();
+    if (desired === 'outro') {
+      outroQueued = true;
+      cancelEndArm();
+    }
     updatePending();
     plan();
   }
@@ -454,15 +458,15 @@
   // gain turns -2.75 db into a volume multiplier (about 0.73) so it sits under the music
   const riser = { file: 'audio/riser.wav', hit: 1.240, gain: Math.pow(10, -2.75 / 20) };
   const riserMargin = 0.03; // seconds, skip the riser if it can't start at least this far ahead
-  
+  const pauseFade = 0.01;   // seconds, how long pause and play take to fade out and back in
 
   let ctx = null;     // the audio context: the browser's audio engine and its clock
-  let fader = null;   // a gain (volume) stage used for pause fades in a later commit
-  let master = null;  // a second gain stage for the volume slider in a later commit
+  let fader = null;   // a gain (volume) stage used for the pause and play fades
+  let master = null;  // a second gain stage that follows the volume slider
   const buffers = {}; // the decoded audio, one per section
   let loadedCount = 0;
   let loadFailed = false;
-  let volume = 50;    // percent, the volume slider sets this in a later commit
+  let volume = 50;    // percent, set by the volume slider
 
   // sets up the audio context and its two gain stages, then downloads every section file
   function initAudio() {
@@ -525,6 +529,8 @@
 
   let segs = [];
   let running = false;
+  let paused = false;
+  let outroQueued = false; // true from the moment the outro is on its way, which locks hp editing
   let phase = 'ready'; // ready phase is for before begin combat, combat, or ended
 
   // creates a player for one section, wires it through its own gain into the fader, and schedules it
@@ -548,6 +554,22 @@
     const seg = { sec, t0, offset, serial0, src, gain };
     segs.push(seg);
     return seg;
+  }
+
+  // the segment playing at time t: the last one that has started by then
+  function segAt(t) {
+    let found = null;
+    for (const g of segs) {
+      if (g.t0 <= t) found = g;
+    }
+    return found;
+  }
+
+  // the section playing right now, or null if read before combat starts
+  function currentSec() {
+    if (!running) return null;
+    const g = segAt(ctx.currentTime);
+    return g ? g.sec : null;
   }
 
     // fades a segment out over the last few milliseconds before tb (time of the bar line), then stops it exactly at tb
@@ -660,16 +682,20 @@
 
   // COMBAT CONTROLS
 
-  // hp can only be changed while the music is running (pause and the outro ill add more locks later)
-  const hpEditable = () => phase === 'combat' && running;
+  // hp can only be changed while the music is running, not while paused or while the outro is on its way
+  const hpEditable = () => phase === 'combat' && running && !paused && !outroQueued;
 
   // begin combat wakes the audio context, then queues the intro
   async function beginCombat() {
     if (phase !== 'ready' || !allLoaded()) return;
     await ctx.resume();
     const t = ctx.currentTime;
+    fader.gain.cancelScheduledValues(t);
+    fader.gain.setValueAtTime(1, t);
     segs = [];
     running = true;
+    paused = false;
+    outroQueued = false;
     phase = 'combat';
     desired = computeDesired();
     if (desired === 'outro') desired = 't4'; // never start straight into the outro
@@ -680,9 +706,95 @@
 
   $('#begin').addEventListener('click', beginCombat);
 
+  // PAUSE AND PLAY
+
+  // pause fades out over 10ms (to prevent annoying audio clicking), then freezes the audio clock, so everything scheduled (even a queued change) stays put
+  function pause() {
+    if (phase !== 'combat' || !running || paused) return;
+    paused = true;
+    cancelEndArm();
+    const t = ctx.currentTime;
+    fader.gain.cancelScheduledValues(t);
+    fader.gain.setValueAtTime(fader.gain.value, t);
+    fader.gain.linearRampToValueAtTime(0, t + pauseFade);
+    setTimeout(() => {
+      if (paused && ctx.state === 'running') ctx.suspend();
+    }, pauseFade * 1000 + 4);
+    refresh();
+  }
+
+  // play unfreezes the clock and fades back in, the music carries on from exactly where it stopped
+  async function play() {
+    if (!paused) return;
+    await ctx.resume();
+    const t = ctx.currentTime;
+    fader.gain.cancelScheduledValues(t);
+    fader.gain.setValueAtTime(0, t);
+    fader.gain.linearRampToValueAtTime(1, t + pauseFade);
+    paused = false;
+    refresh();
+  }
+
+  $('#pause').addEventListener('click', pause);
+  $('#play').addEventListener('click', play);
+
+  // END COMBAT
+  // the first press only asks (the white box appears), a second press within 5 seconds confirms
+
+  let endArmed = false;
+  let endTimer = 0;
+
+  function cancelEndArm() {
+    endArmed = false;
+    clearTimeout(endTimer);
+    $('#end-confirm').hidden = true;
+  }
+
+  $('#end').addEventListener('click', (e) => {
+    e.stopPropagation(); // keeps this click from reaching the document listener below, which would cancel it straight away
+    if (!endArmed) {
+      endArmed = true;
+      $('#end-confirm').hidden = false;
+      endTimer = setTimeout(cancelEndArm, 5000);
+      return;
+    }
+    cancelEndArm();
+    undoHP(); // any half typed hp is thrown away
+    outroQueued = true;
+    desired = 'outro';
+    plan();
+    refresh();
+  });
+
+  // clicking anywhere else undoes the original click to end the combat
+  document.addEventListener('click', () => {
+    if (endArmed) cancelEndArm();
+  });
+
+  // VOLUME
+
+  const volumeInput = $('#volume');
+
+  function applyVolume() {
+    volume = Number(volumeInput.value);
+    $('#vol-pct').textContent = volume + '%';
+    volumeInput.style.setProperty('--p', volume + '%'); // identifies how much of the track is filled white
+    // setTargetAtTime glides to the new level over a few milliseconds, so dragging the slider doesn't crackle
+    if (master) master.gain.setTargetAtTime(volume / 100, ctx.currentTime, 0.015);
+  }
+
+  volumeInput.addEventListener('input', applyVolume);
+
   // keeps every button, hp field and the status line in step with what's happening
   function refresh() {
+    const sec = currentSec();
+    const inCombat = phase === 'combat' && running;
     $('#begin').disabled = !(phase === 'ready' && allLoaded());
+    $('#play').disabled = !(inCombat && paused);
+    $('#pause').disabled = !(inCombat && !paused);
+    // end combat only works while a looping section plays: not during the intro, and not once the outro is on its way
+    $('#end').disabled = !(inCombat && !paused && !outroQueued && sec && sections[sec].loop);
+    if ($('#end').disabled) cancelEndArm();
 
     const editable = hpEditable();
     for (const c of chars) {
@@ -695,11 +807,31 @@
     if (loadFailed) msg = 'The music could not load. Reload the page to try again.';
     else if (!allLoaded()) msg = 'Loading music\u2026 ' + loadedCount + ' of ' + Object.keys(sections).length;
     else if (phase === 'ready') msg = 'Ready. Begin Combat starts the intro.';
+    else if (paused) msg = 'Paused. HP editing is locked until you press Play.';
+    else if (outroQueued) msg = 'Outro playing.';
     $('#status').textContent = msg;
+  }
+
+  // MAIN LOOP
+  // runs every frame, for now it only watches for the section changing (like the intro ending) so the buttons can update
+
+  let lastSec = null;
+
+  function frame() {
+    if (ctx && running) {
+      const sec = currentSec();
+      if (sec !== lastSec) {
+        lastSec = sec;
+        refresh();
+      }
+    }
+    requestAnimationFrame(frame);
   }
 
   // BOOT
   renderSetup();
+  applyVolume();
   initAudio();
   refresh();
+  requestAnimationFrame(frame);
 })();
