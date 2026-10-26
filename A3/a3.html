@@ -39,9 +39,38 @@
 
   </section>
 
-  <!-- combat screen is added here in a later commit -->
-    
-    
-    <script src="script3.js"></script>
+  <!-- COMBAT SCREEN -->
+  <!-- same five-area grid as setup, all hidden until the dm presses combat screen -->
+  <section class="screen combat" id="combat" aria-label="Combat" hidden>
+
+    <div class="top">
+      <h2 class="heading">Override Controls</h2>
+      <div class="btnrow">
+        <!-- all four start disabled, the audio engine switches them on in later commits -->
+        <button class="btn green" id="begin" type="button" disabled>Begin Combat</button>
+        <button class="btn grey" id="play" type="button" disabled>Play</button>
+        <button class="btn grey" id="pause" type="button" disabled>Pause</button>
+        <button class="btn red" id="end" type="button" disabled>End Combat</button>
+        <!-- the 'end-confirm' shown after the first press of end combat, asking the dm to press again to confirm -->
+        <span class="confirm-box" id="end-confirm" hidden>End combat? The outro will play.</span>
+      </div>
+      <!-- short status messages like loading progress, filled in by the script -->
+      <div class="status" id="status" aria-live="polite"></div>
+    </div>
+
+    <!-- the volume slider goes here in a later commit -->
+    <div class="rail-top"></div>
+
+    <div class="stage" id="combat-party"></div>
+
+    <div class="rail" id="combat-boss"></div>
+
+    <!-- the bar timeline and the undo and confirm buttons go here in later commits -->
+    <div class="bottom"></div>
+
+  </section>
+
+  <script src="script3.js"></script>
+
     </body>
 </html>
