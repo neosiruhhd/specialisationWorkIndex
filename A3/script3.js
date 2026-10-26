@@ -437,7 +437,6 @@
     desired = computeDesired();
     updatePending();
     plan();
-    console.log('music heading to:', desired); // this console log is so that the function can be verified working even without audio playing
   }
 
   $('#undo').addEventListener('click', undoHP);
@@ -446,8 +445,9 @@
   // AUDIO ENGINE
   // built on the web audio api, each file is played from exact times on the audio clock provided by the api
 
-  const minLead = 0.05; // seconds of warning anything scheduled needs, so it's never set in the past
+  const minLead = 0.05; // this is the minimum lead time, the seconds of warning anything scheduled needs, so it never accidentally gets set in the past
   const ramp = 0.004;   // seconds, a tiny fade at a cut so the speaker doesn't click
+  const phrase = 4;     // changes land on a 4-bar grid, count starting from the first bar of the intro
 
   let ctx = null;     // the audio context: the browser's audio engine and its clock
   let fader = null;   // a gain (volume) stage used for pause fades in a later commit
@@ -530,33 +530,81 @@
     return seg;
   }
 
+    // fades a segment out over the last few milliseconds before tb (time of the bar line), then stops it exactly at tb
+  function cutOut(seg, tb) {
+    const level = seg.gain.gain;
+    level.cancelScheduledValues(0);
+    level.setValueAtTime(1, Math.max(ctx.currentTime, tb - ramp));
+    level.linearRampToValueAtTime(0, tb);
+    seg.src.stop(tb);
+  }
+
+  // TRANSITIONS
   // decides what plays next and schedules it ahead of time
-  // moving between the looping sections comes in the next commit
+  // runs on begin combat and every time hp is confirmed
   function plan() {
     if (!running || !segs.length) return;
-    const edge = ctx.currentTime + minLead;
+    const now = ctx.currentTime;
+    const edge = now + minLead;
     const last = segs[segs.length - 1];
     // if the last segment hasn't started yet it's queued (future), and the one before it is playing now
     const fut = (last.t0 > edge && segs.length > 1) ? last : null;
     const cur = fut ? segs[segs.length - 2] : last;
 
+    // when a chnage is already queued:
     if (fut) {
       if (fut.sec === desired) return; // already heading to the right section
+
+      // if the queued section isn't wanted any more: cancel it but maintain its landing point (tb)
+      fut.src.stop();
+      fut.gain.disconnect();
+      segs.pop();
+      const tb = fut.t0;
+
+      // if we're still in the intro section, just swap in the new destination stated by the user (although realistically speaking in a dnd battle noone would be taking damage 10 seconds into a fight, more just a polishing measure)
       if (cur.sec === 'intro') {
-        // hp changed during the intro: swap the queued section for the new one, at the same start time
-        fut.src.stop();
-        fut.gain.disconnect();
-        segs.pop();
-        makeSeg(desired, fut.t0, 0, fut.serial0, false);
+        makeSeg(desired, tb, 0, fut.serial0, false);
+        return;
       }
+
+      // if the user quick enough changes back to the section that is already playing: undo its fade out and carry on seamlessly
+      // the old player still stops at tb (a stop can't be cancelled), so a fresh one picks up from the exact same spot
+      if (desired === cur.sec) {
+        cur.gain.gain.cancelScheduledValues(0);
+        cur.gain.gain.setValueAtTime(1, now);
+        const offset = (cur.offset + (tb - cur.t0)) % buffers[cur.sec].duration;
+        makeSeg(cur.sec, tb, offset, fut.serial0, false);
+        return;
+      }
+
+      // the process of changing to a different section creates the same landing point, with a new destination
+      cutOut(cur, tb);
+      makeSeg(desired, tb, 0, fut.serial0, true);
       return;
     }
+
+    // the outro plays oly once at the conclusion of the battle
+    if (cur.sec === 'outro') return; 
 
     // the intro plays once, and the next section starts exactly as it ends with no gap
     if (cur.sec === 'intro') {
       const tEnd = cur.t0 + buffers.intro.duration;
       if (tEnd > edge) makeSeg(desired, tEnd, 0, cur.serial0 + sections.intro.bars, false);
+      return;
     }
+
+    if (desired === cur.sec) return;
+
+    // find the next bar line that's at least minLead away and sits on the 4-bar phrase grid
+    // 'k' counts bars from the start of the current segment, and serial0 + k is that bar's number in the whole fight, confusing maths here
+    const barLen = sections[cur.sec].barLen;
+    let k = Math.floor((edge - cur.t0) / barLen + 1e-9) + 1;
+    while ((cur.serial0 + k) % phrase !== 0) k++;
+    const tb = cur.t0 + k * barLen;
+
+    // cut the current section out right on that line and bring the new one in with a tiny fade
+    cutOut(cur, tb);
+    makeSeg(desired, tb, 0, cur.serial0 + k, true);
   }
 
   // COMBAT CONTROLS
