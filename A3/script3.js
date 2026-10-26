@@ -62,6 +62,20 @@
     arc.style.strokeDashoffset = -(ringLength - remaining);
   }
 
+  // MUSIC RULES
+
+  // which looping section of the song matches a share of hp (measured from 0 to 1)
+  // representing different intensities of the song's instrumentals, from most passive to most aggressive: t1 = 100 to 50%, t2 = 50 to 35%, t3 = 35 to 20%, t4 = 20 to 0%
+  function tierFor(share) {
+    if (share <= 0.20) return 't4';
+    if (share <= 0.35) return 't3';
+    if (share <= 0.50) return 't2';
+    return 't1';
+  }
+
+  // the section the music should be heading to, worked out every time hp is confirmed
+  let desired = 't1';
+
   // SETUP STATE
   // the party and boss are saved in this browser so a refresh doesn't wipe them
 
@@ -295,7 +309,7 @@
     $('#combat').hidden = false;
   }
 
-  // one column per character: pcs across the stage, the boss in the right rail
+    // one column per character: pcs across the stage, the boss in the right rail
   // current hp is an input so the dm can type over it, max hp is plain text since it cant be modified after moving on from the setup screen
   function renderCombat() {
     const party = $('#combat-party');
@@ -308,6 +322,37 @@
       c.arc = ring.arc;
       c.input = el('input', { class: 'hp hp-cur', id: 'hp-' + i, type: 'text', inputmode: 'numeric', 'aria-label': c.name + ' current HP', autocomplete: 'off' });
       c.input.value = String(c.cur);
+
+      // typing: digits only, never above max, and the ring previews the new value straight away
+      c.input.addEventListener('input', () => {
+        let typed = digits(c.input.value);
+        if (typed !== '' && Number(typed) > c.max) typed = String(c.max);
+        c.input.value = typed;
+        showChar(c);
+        updatePending();
+      });
+
+      // leaving a field empty puts its confirmed hp back
+      c.input.addEventListener('blur', () => {
+        if (c.input.value === '') {
+          c.input.value = String(c.cur);
+          showChar(c);
+          updatePending();
+        }
+      });
+
+      // enter confirms every pending change, escape undoes them
+      c.input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          confirmHP();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          undoHP();
+          c.input.blur();
+        }
+      });
+
       ring.stack.append(c.input, el('div', { class: 'hpdiv' }), el('span', { class: 'hp hp-max', text: String(c.max) }));
 
       const col = el('div', { class: 'char' + (c.boss ? ' boss-col' : '') }, [
@@ -315,9 +360,72 @@
         ring.wrap,
       ]);
       (c.boss ? rail : party).appendChild(col);
-      setFill(c.arc, c.cur, c.max);
+      showChar(c);
     });
+    updatePending();
   }
+
+  // HP ENTRY
+  // nothing typed counts until confirm, so the dm can change several characters and submit their updated hp values all at once
+
+  // what a ring should show right now: the typed value if there is one, otherwise the confirmed hp
+  function shownHP(c) {
+    return c.input.value === '' ? c.cur : Number(c.input.value);
+  }
+
+  function showChar(c) {
+    setFill(c.arc, shownHP(c), c.max);
+  }
+
+  // a change is defined as 'isPending' when something is typed and it's different from the confirmed hp
+  function isPending(c) {
+    return c.input.value !== '' && Number(c.input.value) !== c.cur;
+  }
+
+  // every pending field gets the white box, and undo and confirm only show while at least one of the health values is pending
+  function updatePending() {
+    let any = false;
+    for (const c of chars) {
+      const pending = isPending(c);
+      c.input.classList.toggle('pending', pending);
+      if (pending) any = true;
+    }
+    $('#hp-actions').hidden = !any;
+  }
+
+  // reverts every field and ring back to the previously confirmed hp
+  function undoHP() {
+    for (const c of chars) {
+      c.input.value = String(c.cur);
+      showChar(c);
+    }
+    updatePending();
+  }
+
+  // the music follows whoever is in the most danger: the lowest share of hp across the whole fight
+  // if the boss is down to 0 the battle is won, so the music automatically transitions to the outro audio
+  function computeDesired() {
+    const boss = chars.find((c) => c.boss);
+    if (boss && boss.cur === 0) return 'outro';
+    let lowest = Infinity;
+    for (const c of chars) lowest = Math.min(lowest, c.cur / c.max);
+    return tierFor(lowest);
+  }
+
+  // when the dm hits the confirm button, locks in every typed value as the new confirmed hp, then works out which section the music should move to
+  function confirmHP() {
+    for (const c of chars) {
+      if (c.input.value !== '') c.cur = Math.max(0, Math.min(c.max, Number(c.input.value)));
+      c.input.value = String(c.cur);
+      showChar(c);
+    }
+    desired = computeDesired();
+    updatePending();
+    console.log('music heading to:', desired); // this console log is so that the function can be verified working even without audio playing
+  }
+
+  $('#undo').addEventListener('click', undoHP);
+  $('#confirm').addEventListener('click', confirmHP);
 
   // BOOT
   renderSetup();
