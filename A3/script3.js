@@ -23,6 +23,15 @@
     return node;
   }
 
+  // keeps only up to 6 digits and drops leading zeros
+  const digits = (text) => {
+    const only = text.replace(/\D/g, '').slice(0, 6);
+    return only.length > 1 ? String(Number(only)) : only;
+  };
+
+  // true when the text is a whole number and nothing else
+  const isInt = (text) => /^\d+$/.test(text);
+
   // HP RING
 
   // full length of the ring's outline (radius 50)
@@ -120,6 +129,7 @@
     }
 
     renderSetupBoss();
+    validateSetup();
   }
 
   // makes the current and max hp fields for one character and shows them on its ring
@@ -135,7 +145,26 @@
       cur.title = 'The boss always starts at full HP';
     } else {
       cur.value = obj.cur;
+      // process for typing a current hp: clean it, store it, update the ring, save, then recheck the setup
+      cur.addEventListener('input', () => {
+        cur.value = digits(cur.value);
+        obj.cur = cur.value;
+        setFill(arc, obj.cur, obj.max);
+        saveSetup();
+        validateSetup();
+      });
     }
+
+    // typing a max hp: the same steps, and the boss's current hp copies its new max
+    max.addEventListener('input', () => {
+      max.value = digits(max.value);
+      obj.max = max.value;
+      if (bossMode) cur.value = obj.max;
+      setFill(arc, bossMode ? obj.max : obj.cur, obj.max);
+      saveSetup();
+      validateSetup();
+    });
+
     setFill(arc, bossMode ? obj.max : obj.cur, obj.max);
     return { cur, max };
   }
@@ -145,6 +174,11 @@
     const ring = makeRing();
     const name = el('input', { class: 'name-in', id: 'pc-name-' + pc.id, type: 'text', placeholder: 'Name', 'aria-label': 'PC name', maxlength: '24', autocomplete: 'off' });
     name.value = pc.name;
+    name.addEventListener('input', () => {
+      pc.name = name.value;
+      saveSetup();
+      validateSetup();
+    });
 
     const { cur, max } = hpInputs(pc, ring.arc, false);
     ring.stack.append(cur, el('div', { class: 'hpdiv' }), max);
@@ -161,10 +195,22 @@
       },
     });
 
-    return el('div', { class: 'char' }, [
+    const col = el('div', { class: 'char' }, [
       el('div', { class: 'namebox' }, [name, remove]),
       ring.wrap,
     ]);
+
+    // each column has its own step by step check: a name, a max hp of 1 or more, and a current hp between 1 and max
+    // a field that's filled in but wrong gets the red outline, an empty one doesn't, added  bad styling to css in a previous commit
+    col._check = () => {
+      const okMax = isInt(pc.max) && Number(pc.max) >= 1;
+      const okCur = isInt(pc.cur) && Number(pc.cur) >= 1 && (!okMax || Number(pc.cur) <= Number(pc.max));
+      max.classList.toggle('bad', pc.max !== '' && !okMax);
+      cur.classList.toggle('bad', pc.cur !== '' && !okCur);
+      return pc.name.trim() !== '' && okMax && okCur;
+    };
+
+    return col;
   }
 
   // the boss column in the right rail: same as a pc but no remove button
@@ -175,15 +221,49 @@
     const ring = makeRing();
     const name = el('input', { class: 'name-in', id: 'boss-name', type: 'text', placeholder: 'Boss', 'aria-label': 'Boss name', maxlength: '24', autocomplete: 'off' });
     name.value = boss.name;
+    name.addEventListener('input', () => {
+      boss.name = name.value;
+      saveSetup();
+      validateSetup();
+    });
 
     const { cur, max } = hpInputs(boss, ring.arc, true);
     ring.stack.append(cur, el('div', { class: 'hpdiv' }), max);
 
-    rail.appendChild(el('div', { class: 'char boss-col' }, [
+    const col = el('div', { class: 'char boss-col' }, [
       el('div', { class: 'namebox' }, name),
       ring.wrap,
-    ]));
+    ]);
+
+    // the boss only needs a name and a max hp of 1 or more
+    col._check = () => {
+      const okMax = isInt(boss.max) && Number(boss.max) >= 1;
+      max.classList.toggle('bad', boss.max !== '' && !okMax);
+      return boss.name.trim() !== '' && okMax;
+    };
+
+    rail.appendChild(col);
   }
+
+  // VALIDATION
+  // the combat screen button only unlocks when there's at least one pc and every column passes its check
+  function validateSetup() {
+    let ok = setup.pcs.length >= 1;
+    document.querySelectorAll('#setup .char').forEach((col) => {
+      if (col._check && !col._check()) ok = false;
+    });
+    const button = $('#to-combat');
+    button.disabled = !ok;
+    button.title = ok ? '' : 'Add at least one PC, then give every character a name, a max HP of 1 or more, and a current HP between 1 and max.';
+    return ok;
+  }
+
+  // reset wipes the party and boss back to a first visit
+  $('#reset').addEventListener('click', () => {
+    setup = blankSetup();
+    saveSetup();
+    renderSetup();
+  });
 
   // BOOT
   renderSetup();
