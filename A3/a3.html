@@ -26,8 +26,14 @@
       </div>
     </div>
 
-    <!-- the combat screen puts the volume slider here once the user is on the combat screen -->
-    <div class="rail-top"></div>
+    <!-- volume: the label and percentage on one line, the slider underneath -->
+    <div class="rail-top">
+      <div class="vol-head">
+        <label class="heading" for="volume">Volume</label>
+        <span class="vol-pct" id="vol-pct">50%</span>
+      </div>
+      <input class="vol" id="volume" type="range" min="0" max="100" step="1" value="50">
+    </div>
 
     <div class="stage" id="setup-party"></div>
 
