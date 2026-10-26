@@ -456,3 +456,26 @@ grid-template-areas names each region so the parts below can be placed by name. 
 .combat .hp-max {
   color: var(--muted);
 }
+
+/* HP ENTRY */
+
+/* a typed hp that hasn't been confirmed yet turns into a white box so it's obvious it's waiting */
+.combat .hp-cur.pending {
+  background: var(--paper);
+  border-color: #111;
+  color: #111;
+  -webkit-text-fill-color: #111;
+  box-shadow: 0 0 0 1px var(--paper);
+}
+
+/* undo and confirm sit at the bottom right, margin-left auto pushes them to the far side */
+.hp-actions {
+  display: flex;
+  gap: 14px;
+  margin-left: auto;
+}
+
+.hp-actions .btn {
+  padding: .2em .55em;
+  font-size: clamp(18px, 1.9vw, 34px);
+}
