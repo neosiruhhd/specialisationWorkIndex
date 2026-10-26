@@ -74,3 +74,178 @@ button {
     outline: 2px solid var(--paper);
     outline-offset: 2px;
 }
+
+/* SCREEN LAYOUT */
+
+/* Each screen is a grid: a wide left column (for the party) and a right rail (for the solo boss).
+Three rows: the top bar, the stage (which stretches), and the bottom strip.
+grid-template-areas names each region so the parts below can be placed by name. */
+.screen {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(220px, 24vw, 480px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "top    rail-top"
+    "stage  rail"
+    "bottom rail";
+}
+
+.top {
+  grid-area: top;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  padding: 14px 16px 18px;
+  background: var(--ink-0);
+}
+
+.rail-top {
+  grid-area: rail-top;
+  padding: 18px 24px 8px;
+  background: var(--ink-2);
+}
+
+/* The party sits side by side, spread evenly across the stage. */
+.stage {
+  grid-area: stage;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: 12px;
+  min-height: 0;
+  padding: 24px 16px 12px;
+}
+
+.rail {
+  grid-area: rail;
+  display: flex;
+  justify-content: center;
+  min-height: 0;
+  padding: 24px 16px 20px;
+  background: var(--ink-2);
+}
+
+.bottom {
+  grid-area: bottom;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 8px 10px 0;
+}
+
+/* On setup the bottom strip only holds the instructions, so centre them. */
+.setup .bottom {
+  justify-content: center;
+}
+
+/* ---------- Type ---------- */
+
+.brand {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(26px, 2.4vw, 44px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.instructions {
+  max-width: 38ch;
+  margin: 0 auto 16px;
+  padding: .25em .6em;
+  background: var(--paper);
+  color: #111;
+  font-size: clamp(18px, 2.2vw, 40px);
+  line-height: 1.2;
+}
+
+/* ---------- Buttons ---------- */
+
+.btnrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Every button shares this look. The colour classes below only fill in
+   three variables: --a (gradient top), --b (gradient bottom) and --t (text). */
+.btn {
+  padding: .32em .6em;
+  border: 0;
+  border-radius: 6px;
+  background: linear-gradient(var(--a), var(--b));
+  color: var(--t);
+  font-size: clamp(16px, 1.45vw, 26px);
+  line-height: 1.15;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14);
+  /* box-shadow eases slowly for the idle glow, added in a later commit */
+  transition: filter .15s, opacity .15s, box-shadow .6s;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.btn:disabled {
+  opacity: .28;
+  filter: saturate(.4);
+  cursor: not-allowed;
+}
+
+/* --glow is the colour each button glows when the DM returns from idle (later commit). */
+.green {
+  --a: var(--btn-green-a);
+  --b: var(--btn-green-b);
+  --t: var(--btn-green-t);
+  --glow: #7fd24a;
+}
+
+.grey {
+  --a: var(--btn-grey-a);
+  --b: var(--btn-grey-b);
+  --t: var(--btn-grey-t);
+  --glow: #e3e6ea;
+}
+
+.red {
+  --a: var(--btn-red-a);
+  --b: var(--btn-red-b);
+  --t: var(--btn-red-t);
+  --glow: #ff5a5a;
+}
+
+.brown {
+  --a: var(--btn-brown-a);
+  --b: var(--btn-brown-b);
+  --t: var(--btn-brown-t);
+  --glow: #e0a04a;
+}
+
+/* ---------- Narrow screens ---------- */
+
+/* Below 760px wide, stack everything in one column instead of a left column and a rail. */
+@media (max-width: 760px) {
+  .screen {
+    height: auto;
+    min-height: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "top"
+      "rail-top"
+      "stage"
+      "rail"
+      "bottom";
+  }
+
+  .stage {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .bottom {
+    padding-left: 16px;
+  }
+}
