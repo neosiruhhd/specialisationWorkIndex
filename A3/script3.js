@@ -265,6 +265,60 @@
     renderSetup();
   });
 
+  // the combat screen button takes the current setup into combat
+  $('#to-combat').addEventListener('click', () => {
+    if (validateSetup()) showCombat();
+  });
+
+  // COMBAT SCREEN
+
+  // the characters in this fight, rebuilt from the setup every time combat opens
+  // each one holds its name, max hp, current hp and whether it's the boss, plus its ring arc and hp field once they're drawn
+  let chars = [];
+
+  // copies the setup into numbers for combat, swaps the screens over, then draws the columns
+  function showCombat() {
+    chars = setup.pcs.map((p) => ({
+      name: p.name.trim(),
+      max: Number(p.max),
+      cur: Number(p.cur),
+      boss: false,
+    }));
+    chars.push({
+      name: setup.boss.name.trim(),
+      max: Number(setup.boss.max),
+      cur: Number(setup.boss.max),
+      boss: true,
+    });
+    renderCombat();
+    $('#setup').hidden = true;
+    $('#combat').hidden = false;
+  }
+
+  // one column per character: pcs across the stage, the boss in the right rail
+  // current hp is an input so the dm can type over it, max hp is plain text since it cant be modified after moving on from the setup screen
+  function renderCombat() {
+    const party = $('#combat-party');
+    const rail = $('#combat-boss');
+    party.textContent = '';
+    rail.textContent = '';
+
+    chars.forEach((c, i) => {
+      const ring = makeRing();
+      c.arc = ring.arc;
+      c.input = el('input', { class: 'hp hp-cur', id: 'hp-' + i, type: 'text', inputmode: 'numeric', 'aria-label': c.name + ' current HP', autocomplete: 'off' });
+      c.input.value = String(c.cur);
+      ring.stack.append(c.input, el('div', { class: 'hpdiv' }), el('span', { class: 'hp hp-max', text: String(c.max) }));
+
+      const col = el('div', { class: 'char' + (c.boss ? ' boss-col' : '') }, [
+        el('div', { class: 'char-name', text: c.name }),
+        ring.wrap,
+      ]);
+      (c.boss ? rail : party).appendChild(col);
+      setFill(c.arc, c.cur, c.max);
+    });
+  }
+
   // BOOT
   renderSetup();
 })();
