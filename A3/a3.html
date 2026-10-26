@@ -65,8 +65,14 @@
 
     <div class="rail" id="combat-boss"></div>
 
-    <!-- the bar timeline and the undo and confirm buttons go here in later commits -->
-    <div class="bottom"></div>
+    <!-- the bar timeline goes here in a later commit -->
+    <div class="bottom">
+      <!-- only shown while an hp change is waiting to be confirmed -->
+      <div class="hp-actions" id="hp-actions" hidden>
+        <button class="btn brown" id="undo" type="button">Undo</button>
+        <button class="btn green" id="confirm" type="button">Confirm</button>
+      </div>
+    </div>
 
   </section>
 
