@@ -62,6 +62,18 @@
     arc.style.strokeDashoffset = -(ringLength - remaining);
   }
 
+  // MUSIC DATA
+  // the song is cut into six files: an intro, four looping sections (one per hp range) and an outro
+  // bars is how long each file is in bars, loop says whether it repeats, colour is its timeline colour (later commit)
+  const sections = {
+    intro: { file: 'audio/intro.wav', bars: 8, loop: false, colour: 'var(--sec-intro)' },
+    t1: { file: 'audio/100-50.wav', bars: 24, loop: true, colour: 'var(--sec-t1)' },
+    t2: { file: 'audio/50-35.wav', bars: 16, loop: true, colour: 'var(--sec-t2)' },
+    t3: { file: 'audio/35-20.wav', bars: 16, loop: true, colour: 'var(--sec-t3)' },
+    t4: { file: 'audio/20-0.wav', bars: 16, loop: true, colour: 'var(--sec-t4)' },
+    outro: { file: 'audio/outro.wav', bars: 12, loop: false, colour: 'var(--sec-intro)' },
+  };
+
   // MUSIC RULES
 
   // which looping section of the song matches a share of hp (measured from 0 to 1)
@@ -291,7 +303,7 @@
   let chars = [];
 
   // copies the setup into numbers for combat, swaps the screens over, then draws the columns
-  function showCombat() {
+    function showCombat() {
     chars = setup.pcs.map((p) => ({
       name: p.name.trim(),
       max: Number(p.max),
@@ -304,9 +316,11 @@
       cur: Number(setup.boss.max),
       boss: true,
     });
+    phase = 'ready';
     renderCombat();
     $('#setup').hidden = true;
     $('#combat').hidden = false;
+    refresh();
   }
 
     // one column per character: pcs across the stage, the boss in the right rail
@@ -413,7 +427,8 @@
   }
 
   // when the dm hits the confirm button, locks in every typed value as the new confirmed hp, then works out which section the music should move to
-  function confirmHP() {
+    function confirmHP() {
+    if (!hpEditable()) return;
     for (const c of chars) {
       if (c.input.value !== '') c.cur = Math.max(0, Math.min(c.max, Number(c.input.value)));
       c.input.value = String(c.cur);
@@ -421,12 +436,171 @@
     }
     desired = computeDesired();
     updatePending();
+    plan();
     console.log('music heading to:', desired); // this console log is so that the function can be verified working even without audio playing
   }
 
   $('#undo').addEventListener('click', undoHP);
   $('#confirm').addEventListener('click', confirmHP);
 
+  // AUDIO ENGINE
+  // built on the web audio api, each file is played from exact times on the audio clock provided by the api
+
+  const minLead = 0.05; // seconds of warning anything scheduled needs, so it's never set in the past
+  const ramp = 0.004;   // seconds, a tiny fade at a cut so the speaker doesn't click
+
+  let ctx = null;     // the audio context: the browser's audio engine and its clock
+  let fader = null;   // a gain (volume) stage used for pause fades in a later commit
+  let master = null;  // a second gain stage for the volume slider in a later commit
+  const buffers = {}; // the decoded audio, one per section
+  let loadedCount = 0;
+  let loadFailed = false;
+  let volume = 50;    // percent, the volume slider sets this in a later commit
+
+  // sets up the audio context and its two gain stages, then downloads every section file
+  function initAudio() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) {
+      loadFailed = true;
+      return;
+    }
+    // the files are 48khz, so asking for the same rate avoids audio resampling
+    try {
+      ctx = new AC({ sampleRate: 48000 });
+    } catch (e) {
+      ctx = new AC();
+    }
+    fader = ctx.createGain();
+    master = ctx.createGain();
+    fader.connect(master);
+    master.connect(ctx.destination);
+    master.gain.value = volume / 100;
+
+    for (const [key, s] of Object.entries(sections)) {
+      fetch(s.file)
+        .then((response) => {
+          if (!response.ok) throw new Error(response.status);
+          return response.arrayBuffer();
+        })
+        .then((data) => ctx.decodeAudioData(data))
+        .then((buffer) => {
+          buffers[key] = buffer;
+          // this file's own bar length, so its bar lines match exactly where it was cut
+          s.barLen = buffer.duration / s.bars;
+          loadedCount++;
+          refresh();
+        })
+        .catch(() => {
+          loadFailed = true;
+          refresh();
+        });
+    }
+  }
+
+  const allLoaded = () => loadedCount === Object.keys(sections).length;
+
+  // PLAYBACK
+  // a segment is one continuous run of one file, starting at a set time (t0) on the audio clock
+  // serial0 is the bar number it starts on, counted from the first bar of the intro, the timeline uses it later
+
+  let segs = [];
+  let running = false;
+  let phase = 'ready'; // ready phase is for before begin combat, combat, or ended
+
+  // creates a player for one section, wires it through its own gain into the fader, and schedules it
+  function makeSeg(sec, t0, offset, serial0, fadeIn) {
+    const s = sections[sec];
+    const src = ctx.createBufferSource();
+    src.buffer = buffers[sec];
+    if (s.loop) {
+      src.loop = true;
+      src.loopStart = 0;
+      src.loopEnd = src.buffer.duration;
+    }
+    const gain = ctx.createGain();
+    src.connect(gain);
+    gain.connect(fader);
+    if (fadeIn) {
+      gain.gain.setValueAtTime(0, t0);
+      gain.gain.linearRampToValueAtTime(1, t0 + ramp);
+    }
+    src.start(t0, offset);
+    const seg = { sec, t0, offset, serial0, src, gain };
+    segs.push(seg);
+    return seg;
+  }
+
+  // decides what plays next and schedules it ahead of time
+  // moving between the looping sections comes in the next commit
+  function plan() {
+    if (!running || !segs.length) return;
+    const edge = ctx.currentTime + minLead;
+    const last = segs[segs.length - 1];
+    // if the last segment hasn't started yet it's queued (future), and the one before it is playing now
+    const fut = (last.t0 > edge && segs.length > 1) ? last : null;
+    const cur = fut ? segs[segs.length - 2] : last;
+
+    if (fut) {
+      if (fut.sec === desired) return; // already heading to the right section
+      if (cur.sec === 'intro') {
+        // hp changed during the intro: swap the queued section for the new one, at the same start time
+        fut.src.stop();
+        fut.gain.disconnect();
+        segs.pop();
+        makeSeg(desired, fut.t0, 0, fut.serial0, false);
+      }
+      return;
+    }
+
+    // the intro plays once, and the next section starts exactly as it ends with no gap
+    if (cur.sec === 'intro') {
+      const tEnd = cur.t0 + buffers.intro.duration;
+      if (tEnd > edge) makeSeg(desired, tEnd, 0, cur.serial0 + sections.intro.bars, false);
+    }
+  }
+
+  // COMBAT CONTROLS
+
+  // hp can only be changed while the music is running (pause and the outro ill add more locks later)
+  const hpEditable = () => phase === 'combat' && running;
+
+  // begin combat wakes the audio context, then queues the intro
+  async function beginCombat() {
+    if (phase !== 'ready' || !allLoaded()) return;
+    await ctx.resume();
+    const t = ctx.currentTime;
+    segs = [];
+    running = true;
+    phase = 'combat';
+    desired = computeDesired();
+    if (desired === 'outro') desired = 't4'; // never start straight into the outro
+    makeSeg('intro', t + 0.12, 0, 0, false); // a small head start so the first note isn't clipped
+    plan();
+    refresh();
+  }
+
+  $('#begin').addEventListener('click', beginCombat);
+
+  // keeps every button, hp field and the status line in step with what's happening
+  function refresh() {
+    $('#begin').disabled = !(phase === 'ready' && allLoaded());
+
+    const editable = hpEditable();
+    for (const c of chars) {
+      if (c.input) c.input.disabled = !editable;
+    }
+    $('#undo').disabled = !editable;
+    $('#confirm').disabled = !editable;
+
+    let msg = '';
+    if (loadFailed) msg = 'The music could not load. Reload the page to try again.';
+    else if (!allLoaded()) msg = 'Loading music\u2026 ' + loadedCount + ' of ' + Object.keys(sections).length;
+    else if (phase === 'ready') msg = 'Ready. Begin Combat starts the intro.';
+    $('#status').textContent = msg;
+  }
+
   // BOOT
   renderSetup();
+  initAudio();
+  refresh();
 })();
