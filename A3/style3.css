@@ -60,6 +60,11 @@ body{
     font-size: 16px;
 }
 
+/* anything with the hidden attribute stays hidden, even if a class sets display */
+[hidden] {
+  display: none !important;
+}
+
 /* since form controls dont take on the page font on default, gotta code it in explicitly */
 button, input {
     font: inherit;
@@ -143,7 +148,6 @@ grid-template-areas names each region so the parts below can be placed by name. 
   justify-content: center;
 }
 
-/* ---------- Type ---------- */
 /* TYPE */
 
 .brand, .heading {
@@ -164,7 +168,6 @@ grid-template-areas names each region so the parts below can be placed by name. 
   line-height: 1.2;
 }
 
-/* ---------- Buttons ---------- */
 /* BUTTONS */
 
 .btnrow {
