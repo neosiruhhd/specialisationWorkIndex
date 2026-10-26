@@ -447,7 +447,14 @@
 
   const minLead = 0.05; // this is the minimum lead time, the seconds of warning anything scheduled needs, so it never accidentally gets set in the past
   const ramp = 0.004;   // seconds, a tiny fade at a cut so the speaker doesn't click
-  const phrase = 4;     // changes land on a 4-bar grid, count starting from the first bar of the intro
+  const phrase = 4;     // changes land on a 4-bar grid, counted from the first bar of the intro
+
+  // riser for a short build-up sound that plays into every change between sections to help smoothen the transition
+  // hit is how many seconds into the file its peak is, so the peak of the riser can be lined up with the cut
+  // gain turns -2.75 db into a volume multiplier (about 0.73) so it sits under the music
+  const riser = { file: 'audio/riser.wav', hit: 1.240, gain: Math.pow(10, -2.75 / 20) };
+  const riserMargin = 0.03; // seconds, skip the riser if it can't start at least this far ahead
+  
 
   let ctx = null;     // the audio context: the browser's audio engine and its clock
   let fader = null;   // a gain (volume) stage used for pause fades in a later commit
@@ -475,6 +482,19 @@
     fader.connect(master);
     master.connect(ctx.destination);
     master.gain.value = volume / 100;
+
+    // the riser loads separately, if it somehow fails to load the transitions still work, just without it
+    fetch(riser.file)
+      .then((response) => {
+        if (!response.ok) throw new Error(response.status);
+        return response.arrayBuffer();
+      })
+      .then((data) => ctx.decodeAudioData(data))
+      .then((buffer) => {
+        riser.buf = buffer;
+      })
+      .catch(() => {});
+
 
     for (const [key, s] of Object.entries(sections)) {
       fetch(s.file)
@@ -539,7 +559,35 @@
     seg.src.stop(tb);
   }
 
-  // TRANSITIONS
+  // RISER
+
+  // schedules a riser so its peak lands exactly on the cut at tb
+  // if there isn't time to fit the build-up before tb it's skipped to avoid starting part way through
+  function startRiser(tb) {
+    if (!riser.buf) return null;
+    const t0 = tb - riser.hit;
+    if (t0 < ctx.currentTime + riserMargin) return null;
+    const src = ctx.createBufferSource();
+    src.buffer = riser.buf;
+    const gain = ctx.createGain();
+    gain.gain.value = riser.gain;
+    src.connect(gain);
+    gain.connect(fader);
+    src.start(t0);
+    return { src, gain };
+  }
+
+  // stops a riser straight away with a very short fade, used when the dm changes back before the cut
+  function killRiser(r) {
+    if (!r) return;
+    const t = ctx.currentTime;
+    r.gain.gain.cancelScheduledValues(t);
+    r.gain.gain.setValueAtTime(r.gain.gain.value, t);
+    r.gain.gain.linearRampToValueAtTime(0, t + 0.012);
+    r.src.stop(t + 0.02);
+  }
+
+    // TRANSITIONS
   // decides what plays next and schedules it ahead of time
   // runs on begin combat and every time hp is confirmed
   function plan() {
@@ -570,6 +618,7 @@
       // if the user quick enough changes back to the section that is already playing: undo its fade out and carry on seamlessly
       // the old player still stops at tb (a stop can't be cancelled), so a fresh one picks up from the exact same spot
       if (desired === cur.sec) {
+        killRiser(fut.riser); // a change in the loop is no longer imminent, so the build-up stops
         cur.gain.gain.cancelScheduledValues(0);
         cur.gain.gain.setValueAtTime(1, now);
         const offset = (cur.offset + (tb - cur.t0)) % buffers[cur.sec].duration;
@@ -579,7 +628,8 @@
 
       // the process of changing to a different section creates the same landing point, with a new destination
       cutOut(cur, tb);
-      makeSeg(desired, tb, 0, fut.serial0, true);
+      const next = makeSeg(desired, tb, 0, fut.serial0, true);
+      next.riser = fut.riser || startRiser(tb);
       return;
     }
 
@@ -604,7 +654,8 @@
 
     // cut the current section out right on that line and bring the new one in with a tiny fade
     cutOut(cur, tb);
-    makeSeg(desired, tb, 0, cur.serial0 + k, true);
+    const next = makeSeg(desired, tb, 0, cur.serial0 + k, true);
+    next.riser = startRiser(tb);
   }
 
   // COMBAT CONTROLS
