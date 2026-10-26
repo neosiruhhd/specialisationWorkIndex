@@ -396,3 +396,9 @@ grid-template-areas names each region so the parts below can be placed by name. 
 .setup .hp:read-only {
   color: #555;
 }
+
+/* a field that's filled in but invalid gets a red outline */
+.setup .bad {
+  border-color: var(--btn-red-a);
+  box-shadow: 0 0 0 2px var(--btn-red-a);
+}
