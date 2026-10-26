@@ -1,6 +1,8 @@
 // this code wrapped makes sure that all the js stays self contained. ill flesh out the functionality of it in later commits.
 (() => {
     'use strict';
+    const $ = (selector) => document.querySelector(selector);
+
 // HELPERS
 
   // this code will allow me to build an element entirely in one line: the tag, its attributes, then its children
@@ -185,5 +187,4 @@
 
   // BOOT
   renderSetup();
-    const $ = (selector) => document.querySelector(selector);
 })();
