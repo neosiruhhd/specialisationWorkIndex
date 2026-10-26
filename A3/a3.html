@@ -15,5 +15,32 @@
 
     <body>
         <script src="script3.js"></script>
+    <!-- The party and boss areas start empty: script3.js fills them with a column per character in the next stage. -->
+  <section class="screen setup" id="setup" aria-label="Setup">
+
+    <div class="top">
+      <h1 class="brand">Sirens.io</h1>
+      <div class="btnrow">
+        <!-- button to progress to combat screen disabled until every character has a name and valid HP (stage 4). -->
+        <button class="btn green" id="to-combat" type="button" disabled>Combat Screen</button>
+        <button class="btn red" id="reset" type="button">Reset</button>
+      </div>
+    </div>
+
+    <!-- the combat screen puts the volume slider here once the user is on the combat screen -->
+    <div class="rail-top"></div>
+
+    <div class="stage" id="setup-party"></div>
+
+    <div class="rail" id="setup-boss"></div>
+
+    <div class="bottom">
+      <p class="instructions">Make edits to HP and names.<br>Then proceed to the Combat Screen.</p>
+    </div>
+
+  </section>
+
+  <!-- combat screen is added here in a later commit -->
+
     </body>
 </html>
