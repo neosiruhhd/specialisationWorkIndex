@@ -107,6 +107,7 @@ grid-template-areas names each region so the parts below can be placed by name. 
 }
 
 /* The party sits side by side, spread evenly across the stage. */
+/* the party sits side by side, spacing is distributed evenly across the stage */
 .stage {
   grid-area: stage;
   display: flex;
@@ -137,11 +138,13 @@ grid-template-areas names each region so the parts below can be placed by name. 
 }
 
 /* On setup the bottom strip only holds the instructions, so centre them. */
+/* on setup the bottom strip only holds the instructions centered */
 .setup .bottom {
   justify-content: center;
 }
 
 /* ---------- Type ---------- */
+/* TYPE */
 
 .brand {
   margin: 0;
@@ -162,6 +165,7 @@ grid-template-areas names each region so the parts below can be placed by name. 
 }
 
 /* ---------- Buttons ---------- */
+/* BUTTONS */
 
 .btnrow {
   display: flex;
@@ -170,8 +174,7 @@ grid-template-areas names each region so the parts below can be placed by name. 
   gap: 14px;
 }
 
-/* Every button shares this look. The colour classes below only fill in
-   three variables: --a (gradient top), --b (gradient bottom) and --t (text). */
+/* this styling is what applies the three separate colours together to create gradients on each button with the contrasting text colour on top */
 .btn {
   padding: .32em .6em;
   border: 0;
@@ -181,7 +184,7 @@ grid-template-areas names each region so the parts below can be placed by name. 
   font-size: clamp(16px, 1.45vw, 26px);
   line-height: 1.15;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14);
-  /* box-shadow eases slowly for the idle glow, added in a later commit */
+  /* box-shadow eases slowly for the idle glow, will add in a later commit */
   transition: filter .15s, opacity .15s, box-shadow .6s;
 }
 
@@ -224,28 +227,172 @@ grid-template-areas names each region so the parts below can be placed by name. 
   --glow: #e0a04a;
 }
 
-/* ---------- Narrow screens ---------- */
+/* CHARACTER COLUMNS */
+/* one column per character: name on top, hp ring underneath, centred in the stage */
+.char {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
 
-/* Below 760px wide, stack everything in one column instead of a left column and a rail. */
-@media (max-width: 760px) {
-  .screen {
-    height: auto;
-    min-height: 100%;
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "top"
-      "rail-top"
-      "stage"
-      "rail"
-      "bottom";
-  }
+.boss-col {
+  width: 100%;
+  max-width: 300px;
+}
 
-  .stage {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* NAME BOXES */
+/* the white box around a name field, with room for the remove button on its corner */
+.namebox {
+  position: relative;
+  max-width: 100%;
+  padding: .05em .35em;
+  background: var(--paper);
+  border: 3px solid #6d6d6d;
+  border-radius: 12px;
+}
 
-  .bottom {
-    padding-left: 16px;
-  }
+.name-in {
+  width: 100%;
+  min-width: 3ch;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  font-family: var(--display);
+  font-size: clamp(26px, 3.6vw, 66px);
+  line-height: 1.15;
+  text-align: center;
+}
+
+.name-in::placeholder {
+  color: #9a9a9a;
+}
+
+/* the round x button sits on the top right corner of the name box */
+.remove {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 2px solid #6d6d6d;
+  border-radius: 50%;
+  background: var(--ink-0);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.remove:hover {
+  background: var(--btn-red-b);
+}
+
+/* ADD PC SLOT */
+.addslot {
+  padding: .4em .6em;
+  border: 2px dashed #3d3f44;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--muted);
+  font-size: clamp(18px, 1.8vw, 30px);
+}
+
+.addslot:hover {
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+/* a dashed circle to imply where the next pc's ring will go */
+.ghostring {
+  width: 100%;
+  height: 100%;
+  border: 2px dashed #26282c;
+  border-radius: 50%;
+}
+
+/* HP RING */
+/* code from protohealth2: full at 12 o'clock, empties clockwise as hp drops */
+/* container-type lets the text inside size itself to the ring with cqi units (cqi is a unit of measurement that is relative to the ring, for example, 1cqi = 1% of the ring's width) */
+.ringwrap {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(100%, var(--ring, 210px), 44vh);
+  aspect-ratio: 1;
+  container-type: inline-size;
+}
+
+.boss-col .ringwrap {
+  --ring: 270px;
+}
+
+.hpring {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hptrack {
+  fill: none;
+  stroke: var(--track);
+  stroke-width: 14;
+}
+
+.hpcore {
+  fill: var(--hpbox);
+}
+
+/* the ring is rotated so the arc starts at 12 oclock */
+.hparc {
+  fill: none;
+  stroke: var(--hp-a);
+  stroke-width: 14;
+  transform: rotate(-90deg);
+  transform-origin: 60px 60px;
+  transition: stroke-dasharray .25s ease, stroke-dashoffset .25s ease;
+}
+
+/* the hp numbers, stacked in the centre of the ring. from top to bottom: current, a dividing line, then max, both values modifiable */
+.hpstack {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3cqi;
+  font-size: 13cqi;
+}
+
+.hpdiv {
+  width: 34cqi;
+  height: 1px;
+  background: #6e6e6e;
+}
+
+.hp {
+  font-size: inherit;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.05;
+  text-align: center;
+}
+
+/* on setup both hp numbers are white input boxes */
+.setup .hp {
+  width: 4.6ch;
+  padding: 0 .12em;
+  background: var(--paper);
+  border: 2px solid #6d6d6d;
+  border-radius: 7px;
+  color: #111;
+}
+
+/* the boss's current hp can't be edited, it always matches max */
+.setup .hp:read-only {
+  color: #555;
 }
