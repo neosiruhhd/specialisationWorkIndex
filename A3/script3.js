@@ -318,6 +318,7 @@
     });
     phase = 'ready';
     renderCombat();
+    clearTimeline();
     $('#setup').hidden = true;
     $('#combat').hidden = false;
     refresh();
@@ -528,6 +529,7 @@
   // serial0 is the bar number it starts on, counted from the first bar of the intro, the timeline uses it later
 
   let segs = [];
+  let segVersion = 0; // goes up every time a segment is added, so the timeline knows to redraw
   let running = false;
   let paused = false;
   let outroQueued = false; // true from the moment the outro is on its way, which locks hp editing
@@ -553,6 +555,7 @@
     src.start(t0, offset);
     const seg = { sec, t0, offset, serial0, src, gain };
     segs.push(seg);
+    segVersion++;
     return seg;
   }
 
@@ -701,6 +704,7 @@
     if (desired === 'outro') desired = 't4'; // never start straight into the outro
     makeSeg('intro', t + 0.12, 0, 0, false); // a small head start so the first note isn't clipped
     plan();
+    tlDirty = true;
     refresh();
   }
 
@@ -812,13 +816,128 @@
     $('#status').textContent = msg;
   }
 
-  // MAIN LOOPhttps://neosiruhhd.github.io/specialisationWorkIndex/A3/a3.html
-  // runs every frame, for now it only watches for the section changing (like the intro ending) so the buttons can update
+  // BAR TIMELINE
+  // the same conveyor as protobar1, but driven by the music: every dot is a real bar, coloured by the section playing in it
+
+  const timeline = $('#timeline');
+  const slots = 10;        // total slots on the strip
+  const head = 5;          // the playhead's slot, with 5 past bars before it
+  const dots = new Map();  // bar number -> its dot element
+  let tlDirty = true;      // set when the timeline should redraw even though the bar hasn't changed
+  let lastSerial = null;
+  let lastVersion = -1;
+
+  // turns a slot number into a css left value (the 6px is the strip's padding)
+  function slotLeft(slot) {
+    return 'calc(6px + var(--slot) * ' + slot + ')';
+  }
+
+  // the empty rings, drawn once, never move
+  for (let i = 0; i < slots; i++) {
+    const slotEl = el('div', { class: 'slot' }, el('div', { class: 'ring' }));
+    slotEl.style.left = slotLeft(i);
+    timeline.appendChild(slotEl);
+  }
+
+  // the bar number playing right now, counted from the first bar of the intro (-1 before the intro starts)
+  // uses the playing segment's own bar length, so it stays exactly on that file's bar lines
+  function currentSerial() {
+    const now = ctx.currentTime;
+    const g = segAt(now);
+    if (!g) return -1;
+    const s = sections[g.sec];
+    let n = g.serial0 + Math.floor((now - g.t0) / s.barLen + 1e-9);
+    if (!s.loop) n = Math.min(n, g.serial0 + s.bars - 1); // the intro and outro don't run past their last bar
+    return n;
+  }
+
+  // which section bar n belongs to, or null if nothing plays then
+  // it's whichever segment starts at or before that bar, and a looping section keeps going until something replaces it
+  function secOfSerial(n) {
+    if (n < 0) return null;
+    let found = null;
+    for (const g of segs) {
+      if (g.serial0 <= n) found = g;
+    }
+    if (!found) return null;
+    const s = sections[found.sec];
+    if (!s.loop) {
+      const into = n - found.serial0 + Math.round(found.offset / s.barLen);
+      if (into >= s.bars) return null; // past the end of the intro or outro
+    }
+    return found.sec;
+  }
+
+  // removes every dot, used when a new combat opens
+  function clearTimeline() {
+    dots.forEach((d) => d.remove());
+    dots.clear();
+    lastSerial = null;
+    tlDirty = true;
+  }
+
+  // rebuilds which bars are on screen for the current bar, then slides every dot into place
+  function updateTimeline(current) {
+    // the bars that should be visible, and the section each one belongs to
+    const want = new Map();
+    for (let n = current - head; n <= current + (slots - 1 - head); n++) {
+      const sec = secOfSerial(n);
+      if (sec) want.set(n, sec);
+    }
+
+    // add a dot for any bar that has just come into view, parked off the right edge
+    const fresh = [];
+    for (const [n, sec] of want) {
+      let d = dots.get(n);
+      if (!d) {
+        d = el('div', { class: 'slot dotwrap' }, el('div', { class: 'dot' }));
+        d.style.left = slotLeft(slots);
+        d.style.opacity = '0';
+        d.style.transitionDelay = fresh.length * 0.11 + 's'; // several arriving together come in one by one
+        timeline.appendChild(d);
+        dots.set(n, d);
+        fresh.push(d);
+      }
+      // recoloured every update, so a queued change shows on the upcoming dots (the css fades the colour)
+      d.firstChild.style.setProperty('--colour', sections[sec].colour);
+    }
+
+    // commit the parked positions before moving anything, same trick as protobar1
+    void timeline.offsetWidth;
+
+    // slide every wanted dot to its slot, and send off any that aren't wanted any more
+    for (const [n, d] of dots) {
+      if (want.has(n)) {
+        if (!fresh.includes(d)) d.style.transitionDelay = '0s';
+        d.style.opacity = '1';
+        d.style.left = slotLeft(n - current + head);
+      } else {
+        dots.delete(n);
+        d.style.transitionDelay = '0s';
+        if (n < current - head) d.style.left = slotLeft(-1); // old bars slide off the left
+        d.style.opacity = '0';                                // cancelled future bars just fade
+        setTimeout(() => d.remove(), 320);
+      }
+    }
+  }
+
+  // MAIN LOOP
+  // runs every frame: moves the timeline on each new bar, and refreshes the buttons when the section changes
 
   let lastSec = null;
 
   function frame() {
     if (ctx && running) {
+      if (phase === 'combat') {
+        const cur = currentSerial();
+        // redraw on a new bar, when segments change (a queued or cancelled change), or when asked to
+        if (cur !== lastSerial || segVersion !== lastVersion || tlDirty) {
+          lastSerial = cur;
+          lastVersion = segVersion;
+          tlDirty = false;
+          updateTimeline(cur);
+        }
+      }
       const sec = currentSec();
       if (sec !== lastSec) {
         lastSec = sec;
