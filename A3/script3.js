@@ -322,6 +322,7 @@
     $('#setup').hidden = true;
     $('#combat').hidden = false;
     $('#ended').hidden = true;
+    lastActivity = performance.now(); // a fresh combat screen never starts out idle
     refresh();
   }
 
@@ -970,6 +971,65 @@
   }
 
   $('#return').addEventListener('click', showSetup);
+
+  // IDLE GLOW
+  // extended technique from the health prototypes: after 15 seconds with no input, the first movement, click or key press
+  // makes the controls the dm is most likely to need glow, so they can find their place again at a glance
+
+  const idleMS = 15000;
+  const glowMS = 2000;
+  let lastActivity = performance.now();
+  let swallowClick = false; // true while the click that woke the screen still needs to be ignored
+
+  // what glows depends on the moment: play while paused, otherwise pause plus every hp field that can be edited
+  function glowTargets() {
+    if ($('#combat').hidden || phase !== 'combat' || !running) return [];
+    if (paused) return [$('#play')];
+    const targets = [$('#pause')];
+    if (hpEditable()) {
+      for (const c of chars) targets.push(c.input);
+    }
+    return targets;
+  }
+
+  // runs on any activity: if the dm had been idle, the right controls glow for 2 seconds
+  function wake(e) {
+    const now = performance.now();
+    const wasIdle = now - lastActivity >= idleMS;
+    lastActivity = now;
+    if (!wasIdle) return;
+    const targets = glowTargets();
+    if (!targets.length) return;
+    // waking the screen never presses anything, the first click or key after idle only wakes it
+    if (e.type === 'pointerdown' || e.type === 'keydown') {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.type === 'pointerdown') swallowClick = true;
+    }
+    targets.forEach((t) => t.classList.add('glow'));
+    setTimeout(() => targets.forEach((t) => t.classList.remove('glow')), glowMS);
+  }
+
+  // listened for on the whole window, in the capture phase so wake runs before any button hears the event
+  ['pointermove', 'pointerdown', 'keydown', 'wheel', 'touchstart'].forEach((type) => {
+    window.addEventListener(type, wake, { capture: true, passive: type !== 'pointerdown' && type !== 'keydown' });
+  });
+
+  // a pointerdown that woke the screen is followed by a click, which is swallowed here so it doesn't press anything
+  window.addEventListener('click', (e) => {
+    if (swallowClick) {
+      swallowClick = false;
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  // if no click follows (the pointer was dragged away), stop waiting for one
+  window.addEventListener('pointerup', () => {
+    setTimeout(() => {
+      swallowClick = false;
+    }, 0);
+  }, true);
 
   // MAIN LOOP
   // runs every frame: moves the timeline on each new bar, ends the battle when the outro finishes, and refreshes the buttons when the section changes
