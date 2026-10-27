@@ -527,3 +527,82 @@ grid-template-areas names each region so the parts below can be placed by name. 
   border-radius: 50%;
   background: var(--paper);
 }
+
+/* BAR TIMELINE */
+/* the same conveyor as protobar1: --slot is one bar's width and everything is measured in slots */
+/* the variable is set here rather than in :root because only the timeline uses it */
+.timeline-wrap {
+  --slot: clamp(30px, 3.5vw, 60px);
+  position: relative;
+  min-width: 0;
+  padding-top: 70px;
+}
+
+/* the strip: 10 slots wide, plus 6px of padding on each side */
+.timeline {
+  position: relative;
+  width: calc(var(--slot) * 10 + 12px);
+  height: calc(var(--slot) + 16px);
+  padding: 8px 6px;
+  background: #121315;
+}
+
+/* the "current bar" tab sits above the playhead, centred on it */
+.tl-tab {
+  position: absolute;
+  top: 0;
+  left: calc(6px + var(--slot) * 5.5);
+  padding: 10px 22px 8px;
+  background: var(--ink-0);
+  font-family: var(--display);
+  font-size: clamp(22px, 2.2vw, 42px);
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+/* dashed line through the centre of the current bar's slot */
+.playhead {
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  left: calc(6px + var(--slot) * 5.5);
+  border-left: 2px dashed var(--paper);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* one bar-wide square, placed by the script with left */
+.slot {
+  position: absolute;
+  top: 8px;
+  width: var(--slot);
+  height: var(--slot);
+  display: grid;
+  place-items: center;
+}
+
+/* empty ring marking every slot */
+.ring {
+  width: 72%;
+  height: 72%;
+  border: 2px solid #2c2e33;
+  border-radius: 50%;
+}
+
+/* a slot carrying a dot, left and opacity ease to make the conveyor slide */
+.dotwrap {
+  z-index: 2;
+  transition: left .28s ease, opacity .28s ease;
+}
+
+/* each dot takes its section's colour from --colour, with a faint halo of the same colour */
+/* the colour transition is what fades the upcoming dots when a change is queued */
+.dot {
+  width: 72%;
+  height: 72%;
+  border-radius: 50%;
+  background: var(--colour);
+  box-shadow: 0 0 0 calc(var(--slot) * .07) color-mix(in srgb, var(--colour) 22%, transparent);
+  transition: background-color .3s ease, box-shadow .3s ease;
+}
