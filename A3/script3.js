@@ -812,7 +812,7 @@
     $('#status').textContent = msg;
   }
 
-  // MAIN LOOP
+  // MAIN LOOPhttps://neosiruhhd.github.io/specialisationWorkIndex/A3/a3.html
   // runs every frame, for now it only watches for the section changing (like the intro ending) so the buttons can update
 
   let lastSec = null;
