@@ -606,3 +606,57 @@ grid-template-areas names each region so the parts below can be placed by name. 
   box-shadow: 0 0 0 calc(var(--slot) * .07) color-mix(in srgb, var(--colour) 22%, transparent);
   transition: background-color .3s ease, box-shadow .3s ease;
 }
+
+/* BATTLE ENDED */
+
+/* a dimmed layer over the whole window, with the panel centred on it */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, .35);
+}
+
+.ended {
+  max-width: 100%;
+  padding: 1em 1.4em;
+  background: var(--paper);
+  color: #111;
+  font-size: clamp(26px, 4vw, 64px);
+  line-height: 1.25;
+  text-align: center;
+}
+
+.ended p {
+  margin: 0;
+}
+
+/* the return button is styled as a plain blue link */
+.ended button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font-size: inherit;
+  text-decoration: none;
+}
+
+.ended button:hover {
+  text-decoration: underline;
+}
+
+/* IDLE GLOW */
+/* extended technique from the health prototypes, each button glows in its own --glow colour (set in the buttons section) */
+/* two shadows: a solid ring hugging the edge, then a soft wide bloom of the same colour */
+/* !important so it wins over the buttons' own box-shadow, and the existing box-shadow transitions fade it in and out */
+.glow {
+  box-shadow: 0 0 0 3px var(--glow, #fff), 0 0 26px 8px color-mix(in srgb, var(--glow, #fff) 55%, transparent) !important;
+}
+
+/* the hp fields have no colour class, so they glow white */
+.hp-cur.glow {
+  --glow: #ffffff;
+}
