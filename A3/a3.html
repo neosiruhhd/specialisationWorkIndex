@@ -71,8 +71,16 @@
 
     <div class="rail" id="combat-boss"></div>
 
-    <!-- the bar timeline goes here in a later commit -->
     <div class="bottom">
+      <!-- bar timeline: 5 past bars, the current bar under the playhead, then 4 upcoming bars -->
+      <!-- the empty rings and moving dots are added by the script -->
+      <div class="timeline-wrap">
+        <div class="tl-tab">Current Bar</div>
+        <div class="timeline" id="timeline">
+          <div class="playhead"></div>
+        </div>
+      </div>
+
       <!-- only shown while an hp change is waiting to be confirmed -->
       <div class="hp-actions" id="hp-actions" hidden>
         <button class="btn brown" id="undo" type="button">Undo</button>
