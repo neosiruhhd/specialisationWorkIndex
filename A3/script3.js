@@ -321,6 +321,7 @@
     clearTimeline();
     $('#setup').hidden = true;
     $('#combat').hidden = false;
+    $('#ended').hidden = true;
     refresh();
   }
 
@@ -460,6 +461,7 @@
   const riser = { file: 'audio/riser.wav', hit: 1.240, gain: Math.pow(10, -2.75 / 20) };
   const riserMargin = 0.03; // seconds, skip the riser if it can't start at least this far ahead
   const pauseFade = 0.01;   // seconds, how long pause and play take to fade out and back in
+  const concludeAt = 17.7;  // seconds into the outro when its sound has finished, the battle counts as over then
 
   let ctx = null;     // the audio context: the browser's audio engine and its clock
   let fader = null;   // a gain (volume) stage used for the pause and play fades
@@ -921,8 +923,56 @@
     }
   }
 
+  // BATTLE END
+
+  // stops and unplugs every segment and riser, used when leaving combat
+  // try catch because stopping a player that has already stopped can throw in some browsers
+  function stopAll() {
+    for (const g of segs) {
+      try {
+        g.src.stop();
+      } catch (e) {}
+      g.gain.disconnect();
+      if (g.riser) {
+        try {
+          g.riser.src.stop();
+        } catch (e) {}
+        g.riser.gain.disconnect();
+      }
+    }
+    segs = [];
+    segVersion++;
+    running = false;
+    paused = false;
+    outroQueued = false;
+  }
+
+  // the outro has finished: lock the controls and show the battle ended panel
+  function endBattle() {
+    phase = 'ended';
+    cancelEndArm();
+    $('#ended').hidden = false;
+    refresh();
+    $('#return').focus();
+  }
+
+  // back to setup: silence everything, rest the audio clock until the next fight, and swap the screens back
+  // the setup itself was never changed by combat, so the party is exactly as the dm left it
+  function showSetup() {
+    stopAll();
+    if (ctx && ctx.state === 'running') ctx.suspend();
+    phase = 'ready';
+    cancelEndArm();
+    $('#combat').hidden = true;
+    $('#ended').hidden = true;
+    $('#setup').hidden = false;
+    renderSetup();
+  }
+
+  $('#return').addEventListener('click', showSetup);
+
   // MAIN LOOP
-  // runs every frame: moves the timeline on each new bar, and refreshes the buttons when the section changes
+  // runs every frame: moves the timeline on each new bar, ends the battle when the outro finishes, and refreshes the buttons when the section changes
 
   let lastSec = null;
 
@@ -937,6 +987,9 @@
           tlDirty = false;
           updateTimeline(cur);
         }
+        // once the outro has played out, the battle is over
+        const outro = segs.find((g) => g.sec === 'outro');
+        if (outro && ctx.currentTime >= outro.t0 + concludeAt) endBattle();
       }
       const sec = currentSec();
       if (sec !== lastSec) {
